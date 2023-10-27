@@ -5,25 +5,9 @@ import { Typography, createTheme } from '@mui/material';
 import { Layout } from './components/Layout';
 import { appTheme } from './config/theme';
 import { Routes, Route, Link } from 'react-router-dom';
-
-
-const Home = () => {
-  return (
-    <div>
-      <Typography variant="h1">Home</Typography>
-      <Link to="/about">About</Link>
-    </div>
-  )
-}
-
-const About = () => {
-  return (
-    <div>
-      <Typography variant="h1">About</Typography>
-      <Link to="/">Home</Link>
-    </div>
-  )
-}
+import { CategoryList } from './features/categories/ListCategory';
+import { CategoryCreate } from './features/categories/CreateCategory';
+import { CategoryEdit } from './features/categories/EditCategory';
 
 export default function App() {
   return (
@@ -36,8 +20,16 @@ export default function App() {
         <Layout>
           <h1>Welcome</h1>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path='/about' element={<About />} />
+            <Route path="/" element={<CategoryList />} />
+            <Route path="/categories" element={<CategoryList />} />
+            <Route path="/categories/create" element={<CategoryCreate />} />
+            <Route path="/categories/edit/:id" element={<CategoryEdit />} />
+            <Route path="*" element={
+              <Box sx={{ color: "white" }}>
+                <Typography variant="h1">404</Typography>
+                <Typography variant="h2">Page not found</Typography>
+              </Box>
+            } />
           </Routes>
         </Layout>
       </Box>
