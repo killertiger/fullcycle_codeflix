@@ -16,3 +16,4 @@ Chrome extension:
 
 - react-router-dom - Create the routes
 - mui - Material Design
+- [mui/x-data-grid](https://mui.com/x/react-data-grid/getting-started/) - Data grid with filter, pagination, ordering, etc.
