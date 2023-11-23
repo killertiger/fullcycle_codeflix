@@ -2,7 +2,7 @@ import { Box, Button, IconButton, Link, Typography } from "@mui/material"
 import { useAppSelector } from "../../app/hooks";
 import { selectCategories } from "./categorySlice";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 
 export const CategoryList = () => {
     const categories = useAppSelector(selectCategories)
@@ -31,7 +31,8 @@ export const CategoryList = () => {
         {
             field: 'createdAt',
             headerName: 'Created At',
-            flex: 1},
+            flex: 1
+        },
         {
             field: 'id',
             headerName: 'Actions',
@@ -46,7 +47,7 @@ export const CategoryList = () => {
                 color="secondary"
                 onClick={() => console.log("clicked")}
                 aria-label="delete"
-                >
+            >
                 <DeleteIcon />
             </IconButton>
         )
@@ -75,7 +76,17 @@ export const CategoryList = () => {
             </Box>
 
             <div style={{ height: 300, width: '100%' }}>
-                <DataGrid rows={rows} columns={columns} />
+                <DataGrid
+                    slots={{ toolbar: GridToolbar }}
+                    disableColumnSelector={true}
+                    disableColumnFilter={true}
+                    disableDensitySelector={true}
+                    disableRowSelectionOnClick={true}
+                    slotProps={{
+                        toolbar: { showQuickFilter: true}
+                    }}
+                    rows={rows}
+                    columns={columns} />
             </div>
         </Box>
     )
