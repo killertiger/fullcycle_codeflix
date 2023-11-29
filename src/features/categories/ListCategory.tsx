@@ -7,6 +7,13 @@ import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams, GridToolbar }
 export const CategoryList = () => {
     const categories = useAppSelector(selectCategories)
 
+    const slotProps = {
+        toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 }
+        },
+    }
+
     const rows: GridRowsProp = categories.map((category) => ({
         id: category.id,
         name: category.name,
@@ -19,7 +26,8 @@ export const CategoryList = () => {
         {
             field: 'name',
             headerName: 'Name',
-            flex: 1
+            flex: 1,
+            renderCell: renderNameCell,
         },
         {
             field: 'isActive',
@@ -61,6 +69,15 @@ export const CategoryList = () => {
         )
     }
 
+    function renderNameCell(rowData: GridRenderCellParams) {
+        return (
+            <Link style={{ textDecoration: "none" }}
+                href={`/categories/edit/${rowData.id}`}>
+                <Typography color="primary">{rowData.value}</Typography>
+            </Link>
+        )
+    }
+
     return (
         <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Box display="flex" justifyContent="flex-end">
@@ -75,19 +92,19 @@ export const CategoryList = () => {
                 </Button>
             </Box>
 
-            <div style={{ height: 300, width: '100%' }}>
+            <Box sx={{ display: "flex", height: 600}}>
                 <DataGrid
-                    slots={{ toolbar: GridToolbar }}
-                    disableColumnSelector={true}
+                    columns={columns} 
                     disableColumnFilter={true}
+                    disableColumnSelector={true}
                     disableDensitySelector={true}
                     disableRowSelectionOnClick={true}
-                    slotProps={{
-                        toolbar: { showQuickFilter: true}
-                    }}
+                    pageSizeOptions={[2, 20, 50, 100]}
                     rows={rows}
-                    columns={columns} />
-            </div>
+                    slotProps={slotProps}
+                    slots={{ toolbar: GridToolbar }}
+                    />
+            </Box>
         </Box>
     )
 };
