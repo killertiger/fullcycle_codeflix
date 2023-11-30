@@ -1,11 +1,12 @@
-import { Box, Button, FormControl, FormControlLabel, FormGroup, Grid, Link, Switch, TextField } from '@mui/material';
+import { Box, Button, FormControl, FormControlLabel, FormGroup, Grid, Switch, TextField } from '@mui/material';
 import { Category } from '../categorySlice';
+import { Link } from 'react-router-dom';
 
 type Props = {
     category: Category;
     isDisabled?: boolean;
     isLoading?: boolean;
-    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
   };
@@ -14,13 +15,13 @@ export function CategoryForm({
     category,
     isDisabled = false,
     isLoading = false,
-    onSubmit,
+    handleSubmit,
     handleChange,
     handleToggle,
 }:Props) {
     return (
         <Box p={2}>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <FormControl fullWidth>
@@ -65,7 +66,7 @@ export function CategoryForm({
 
                     <Grid item xs={12}>
                         <Box display="flex" gap={2}>
-                            <Button variant="contained" component={Link} href="/categories">
+                            <Button variant="contained" component={Link} to="/categories">
                                 Back
                             </Button>
 

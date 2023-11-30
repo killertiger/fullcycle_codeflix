@@ -1,11 +1,13 @@
-import { Box, Button, IconButton, Link, Typography } from "@mui/material"
-import { useAppSelector } from "../../app/hooks";
-import { selectCategories } from "./categorySlice";
+import { Box, Button, IconButton, Typography } from "@mui/material"
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { deleteCategory, selectCategories } from "./categorySlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
+import { Link } from "react-router-dom";
 
 export const CategoryList = () => {
-    const categories = useAppSelector(selectCategories)
+    const categories = useAppSelector(selectCategories);
+    const dispatch = useAppDispatch();
 
     const slotProps = {
         toolbar: {
@@ -49,11 +51,15 @@ export const CategoryList = () => {
         }
     ];
 
+    function handleDeleteCategory(id: string) {
+        dispatch(deleteCategory(id));
+    }
+
     function renderActionsCell(rowData: GridRenderCellParams) {
         return (
             <IconButton
                 color="secondary"
-                onClick={() => console.log("clicked")}
+                onClick={(params) => handleDeleteCategory(rowData.value)}
                 aria-label="delete"
             >
                 <DeleteIcon />
@@ -72,7 +78,7 @@ export const CategoryList = () => {
     function renderNameCell(rowData: GridRenderCellParams) {
         return (
             <Link style={{ textDecoration: "none" }}
-                href={`/categories/edit/${rowData.id}`}>
+                to={`/categories/edit/${rowData.id}`}>
                 <Typography color="primary">{rowData.value}</Typography>
             </Link>
         )
@@ -85,7 +91,7 @@ export const CategoryList = () => {
                     variant="contained"
                     color="secondary"
                     component={Link}
-                    href="/categories/create"
+                    to="/categories/create"
                     style={{ marginBottom: "1rem" }}
                 >
                     New Category
