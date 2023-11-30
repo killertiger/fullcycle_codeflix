@@ -1,13 +1,15 @@
 import { Box, Button, IconButton, Typography } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { deleteCategory, selectCategories } from "./categorySlice";
+import { deleteCategory, selectCategories, useDeleteCategoryMutation, useGetCategoriesQuery } from "./categorySlice";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid, GridRowsProp, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 
 export const CategoryList = () => {
-    const categories = useAppSelector(selectCategories);
+    const { data, isFetching, error } = useGetCategoriesQuery();
+    const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
     const dispatch = useAppDispatch();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -18,13 +20,14 @@ export const CategoryList = () => {
         },
     }
 
-    const rows: GridRowsProp = categories.map((category) => ({
+    const rows: GridRowsProp = data ? data.data.map((category) => ({
         id: category.id,
         name: category.name,
         description: category.description,
         isActive: category.is_active,
         createdAt: new Date(category.created_at).toLocaleDateString("pt-BR"),
-    }));
+    }))
+        : [];
 
     const columns: GridColDef[] = [
         {
@@ -53,10 +56,19 @@ export const CategoryList = () => {
         }
     ];
 
-    function handleDeleteCategory(id: string) {
-        dispatch(deleteCategory(id));
-        enqueueSnackbar("Category deleted successfully", { variant: "success" })
+    async function handleDeleteCategory(id: string) {
+        await deleteCategory({ id });
+        // 
     }
+
+    useEffect(() => {
+        if (deleteCategoryStatus.isSuccess) {
+            enqueueSnackbar("Category deleted successfully", { variant: "success" });
+        }
+        if (deleteCategoryStatus.error) {
+            enqueueSnackbar("Category not deleted", { variant: "error" });
+        }
+    }, [deleteCategoryStatus, enqueueSnackbar]);
 
     function renderActionsCell(rowData: GridRenderCellParams) {
         return (
@@ -101,9 +113,9 @@ export const CategoryList = () => {
                 </Button>
             </Box>
 
-            <Box sx={{ display: "flex", height: 600}}>
+            <Box sx={{ display: "flex", height: 600 }}>
                 <DataGrid
-                    columns={columns} 
+                    columns={columns}
                     disableColumnFilter={true}
                     disableColumnSelector={true}
                     disableDensitySelector={true}
@@ -112,7 +124,7 @@ export const CategoryList = () => {
                     rows={rows}
                     slotProps={slotProps}
                     slots={{ toolbar: GridToolbar }}
-                    />
+                />
             </Box>
         </Box>
     )

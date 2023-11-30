@@ -19,3 +19,7 @@ Chrome extension:
 - [@mui/x-data-grid](https://mui.com/x/react-data-grid/getting-started/) - Data grid with filter, pagination, ordering, etc.
 - [@mui/icons-material](https://mui.com/material-ui/icons/) - Icons from Material Design
 - [notistack](https://notistack.com/) - React Snackbars
+
+
+### External References
+https://app.quicktype.io/ - Convert JSON into gorgeous, typesafe code in any language.
