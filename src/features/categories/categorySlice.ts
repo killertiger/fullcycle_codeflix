@@ -13,7 +13,7 @@ export interface Category {
     updated_at: string;
 };
 
-const endpointUrl = "/categories";;
+const endpointUrl = "/categories";
 
 function deleteCategoryMutation (category: Category) {
     return {

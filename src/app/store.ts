@@ -6,8 +6,10 @@ export const store = configureStore({
   reducer: {
     categories: categoriesReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
-    [categoriesApiSlice.reducerPath]: categoriesApiSlice.reducer,
+    [categoriesApiSlice.reducerPath]: apiSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;
