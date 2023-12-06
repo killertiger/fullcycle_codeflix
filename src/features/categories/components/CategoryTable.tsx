@@ -1,5 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DataGrid, GridColDef, GridFilterModel, GridRenderCellParams } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridFilterModel, GridPaginationModel, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
 import { Results } from "../../../types/Categories";
 import { Box, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -9,12 +9,12 @@ type Props = {
     data: Results | undefined;
     perPage: number;
     isFetching: boolean;
-    rowsPerPage?: number;
+    rowsPerPage?: number[];
 
-    handleOnPageChange: (page: number) => void;
+    handleOnPageChange: (pageModel: GridPaginationModel) => void;
     handleFilterChange: (filterModel: GridFilterModel) => void;
-    handleOnPageSizeChange: (pageSize: number) => void;
-    handleDelete: (id: number) => void;
+    // handleOnPageSizeChange: (pageSize: number) => void;
+    handleDelete: (id: string) => void;
 };
 
 export function CategoriesTable({
@@ -24,7 +24,7 @@ export function CategoriesTable({
     rowsPerPage,
     handleOnPageChange,
     handleFilterChange,
-    handleOnPageSizeChange,
+    // handleOnPageSizeChange,
     handleDelete,
 }: Props) {
 
@@ -102,10 +102,35 @@ export function CategoriesTable({
     }
 
     const rows = data ? mapDataToGridRows(data) : [];
+    const rowCount = data?.meta.total ?? 0;
 
     return (
         <Box sx={{ display: "flex", height: 600 }}>
-            <DataGrid rows={rows} columns={columns} />
+            <DataGrid
+                rows={rows}
+                pagination={true}
+                columns={columns}
+                paginationModel={{
+                    pageSize: perPage, // pageSize={perPage}
+                    page: 0,
+                }}
+                filterMode="server"
+                rowCount={rowCount}
+                loading={isFetching}
+                paginationMode="server"
+                checkboxSelection={false}
+                disableColumnFilter={true}
+                disableColumnSelector={true}
+                disableDensitySelector={true}
+                disableRowSelectionOnClick={true}
+                pageSizeOptions={rowsPerPage}
+                slots={{ toolbar: GridToolbar }}
+                slotProps={slotProps}
+                onPaginationModelChange={handleOnPageChange}
+                onFilterModelChange={handleFilterChange}
+            // onPageSizeChange={handleOnPageSizeChange} - not found, probably will be addressed on onPaginationModelChange
+            // onPageChange - not found, probably will be addressed on onPaginationModelChange
+            />
         </Box>
     )
 }
