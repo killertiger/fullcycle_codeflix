@@ -8,6 +8,7 @@ import { NestCamWiredStandTwoTone } from "@mui/icons-material";
 type Props = {
     data: Results | undefined;
     perPage: number;
+    page: number;
     isFetching: boolean;
     rowsPerPage?: number[];
 
@@ -20,6 +21,7 @@ type Props = {
 export function CategoriesTable({
     data,
     perPage,
+    page,
     isFetching,
     rowsPerPage,
     handleOnPageChange,
@@ -111,8 +113,8 @@ export function CategoriesTable({
                 pagination={true}
                 columns={columns}
                 paginationModel={{
-                    pageSize: perPage, // pageSize={perPage}
-                    page: 0,
+                    pageSize: perPage,
+                    page: page,
                 }}
                 filterMode="server"
                 rowCount={rowCount}
