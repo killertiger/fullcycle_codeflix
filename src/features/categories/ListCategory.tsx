@@ -1,15 +1,13 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button, IconButton, Typography } from "@mui/material";
-import { DataGrid, GridColDef, GridFilterModel, GridPaginationModel, GridRenderCellParams, GridRowsProp, GridToolbar } from '@mui/x-data-grid';
+import { Box, Button, Typography } from "@mui/material";
+import { GridFilterModel, GridPaginationModel } from '@mui/x-data-grid';
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../app/hooks";
 import { useDeleteCategoryMutation, useGetCategoriesQuery } from "./categorySlice";
 import { CategoriesTable } from "./components/CategoryTable";
 
 export const CategoryList = () => {
-    const [page, setPage]  = useState(1);
+    const [page, setPage]  = useState(0);
     const [perPage, setPerPage] = useState(10);
     const [search, setSearch] = useState("");
     const [rowsPerPage] = useState([10, 25, 50]);
@@ -50,6 +48,10 @@ export const CategoryList = () => {
             enqueueSnackbar("Category not deleted", { variant: "error" });
         }
     }, [deleteCategoryStatus, enqueueSnackbar]);
+
+    if (error) {
+        return <Typography>Error fetching categories</Typography>
+    }
 
     return (
         <Box maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
