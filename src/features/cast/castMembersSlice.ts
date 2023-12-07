@@ -1,7 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import { CastMember, CastMemberParams, Result, Results } from "../../types/CastMembers";
 import { apiSlice } from "../api/apiSlice";
-import { CastMember, CastMemberParams, Results } from "../../types/CastMembers";
 
 const endpointUrl = "/cast_members";
 
@@ -40,15 +38,65 @@ function getCastMembers(params: CastMemberParams) {
     return `${endpointUrl}?${parseQueryParams({ page, perPage, search, type })}`;
 }
 
+function getCastMember({id}: {id: string}) {
+    return {
+        method: "GET",
+        url: `${endpointUrl}/${id}`,
+    };
+}
+
+function deleteCastMember({ id }: { id: string }) {
+    return {
+        url: `${endpointUrl}/${id}`,
+        method: "DELETE"
+    };
+}
+
+function updateCastMember(castMember: CastMember) {
+    return {
+        url: `${endpointUrl}/${castMember.id}`,
+        method: "PUT",
+        data: castMember,
+    };
+}
+
+function createCastMember(castMember: CastMember) {
+    return {
+        url: endpointUrl,
+        method: "POST",
+        data: castMember,
+    };
+}
+
 export const castMemberApiSlice = apiSlice.injectEndpoints({
-    endpoints: ({ query }) => ({
+    endpoints: ({ query, mutation }) => ({
         getCastMembers: query<Results, CastMemberParams>({
             query: getCastMembers,
             providesTags: ["CastMembers"],
+        }),
+        getCastMember: query<Result, {id: string}>({
+            query: getCastMember,
+            providesTags: ["CastMembers"]
+        }),
+        createCastMember: mutation<Result, CastMember>({
+            query: createCastMember,
+            invalidatesTags: ["CastMembers"],
+        }),
+        updateCastMember: mutation<Result, CastMember>({
+            query: updateCastMember,
+            invalidatesTags: ["CastMembers"],
+        }),
+        deleteCastMember: mutation<Result, { id: string }>({
+            query: deleteCastMember,
+            invalidatesTags: ["CastMembers"],
         }),
     }),
 });
 
 export const {
     useGetCastMembersQuery,
+    useGetCastMemberQuery,
+    useCreateCastMemberMutation,
+    useUpdateCastMemberMutation,
+    useDeleteCastMemberMutation,
 } = castMemberApiSlice;
