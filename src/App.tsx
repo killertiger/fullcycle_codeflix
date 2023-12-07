@@ -9,6 +9,7 @@ import { CategoryList } from './features/categories/ListCategory';
 import { CategoryCreate } from './features/categories/CreateCategory';
 import { CategoryEdit } from './features/categories/EditCategory';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+import { ListCastMembers } from './features/cast/ListCastMembers';
 
 export default function App() {
   return (
@@ -29,9 +30,15 @@ export default function App() {
             <h1>Welcome</h1>
             <Routes>
               <Route path="/" element={<CategoryList />} />
+
+              {/* Category */}
               <Route path="/categories" element={<CategoryList />} />
               <Route path="/categories/create" element={<CategoryCreate />} />
               <Route path="/categories/edit/:id" element={<CategoryEdit />} />
+
+              {/* Cast Members */}
+              <Route path="/cast-members" element={<ListCastMembers />} />
+
               <Route path="*" element={
                 <Box sx={{ color: "white" }}>
                   <Typography variant="h1">404</Typography>

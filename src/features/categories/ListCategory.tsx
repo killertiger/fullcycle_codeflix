@@ -34,8 +34,7 @@ export const CategoryList = () => {
         if(filterModel.quickFilterValues?.length) {
             const search = filterModel.quickFilterValues.join("");
             setSearch(search);
-        }
-        else {
+        } else {
             setSearch("");
         }
     }
