@@ -1,9 +1,8 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid, GridColDef, GridFilterModel, GridPaginationModel, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
-import { Results } from "../../../types/Categories";
+import { Results } from "../../../types/CastMembers";
 import { Box, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { NestCamWiredStandTwoTone } from "@mui/icons-material";
 
 type Props = {
     data: Results | undefined;
@@ -14,11 +13,10 @@ type Props = {
 
     handleOnPageChange: (pageModel: GridPaginationModel) => void;
     handleFilterChange: (filterModel: GridFilterModel) => void;
-    // handleOnPageSizeChange: (pageSize: number) => void;
     handleDelete: (id: string) => void;
-};
+}
 
-export function CategoriesTable({
+export function CastMembersTable({
     data,
     perPage,
     page,
@@ -26,10 +24,8 @@ export function CategoriesTable({
     rowsPerPage,
     handleOnPageChange,
     handleFilterChange,
-    // handleOnPageSizeChange,
     handleDelete,
 }: Props) {
-
     const slotProps = {
         toolbar: {
             showQuickFilter: true,
@@ -39,39 +35,32 @@ export function CategoriesTable({
 
     const columns: GridColDef[] = [
         {
-            field: 'name',
-            headerName: 'Name',
             flex: 1,
+            field: "name",
+            headerName: "Name",
             renderCell: renderNameCell,
         },
         {
-            field: 'isActive',
-            headerName: 'Active',
             flex: 1,
-            type: 'boolean',
-            renderCell: renderIsActiveCell,
+            field: "type",
+            headerName: "Type",
+            renderCell: renderTypeCell,
         },
         {
-            field: 'createdAt',
-            headerName: 'Created At',
-            flex: 1
-        },
-        {
-            field: 'id',
-            headerName: 'Actions',
             flex: 1,
-            renderCell: renderActionsCell,
+            field: "id",
+            headerName: "Actions",
+            renderCell: renderActionsCell
         }
     ];
 
-    function mapDataToGridRows(data: Results) {
-        const { data: categories } = data;
-        return categories.map((category) => ({
-            id: category.id,
-            name: category.name,
-            isActive: category.is_active,
-            created_at: new Date(category.created_at).toLocaleDateString("pt-BR"),
-        }))
+    function renderNameCell(rowData: GridRenderCellParams) {
+        return (
+            <Link style={{textDecoration: "none"}} 
+            to={`/cast-members/edit/${rowData.id}`}>
+                <Typography color="primary">{rowData.value}</Typography>
+            </Link>
+        )
     }
 
     function renderActionsCell(rowData: GridRenderCellParams) {
@@ -79,28 +68,27 @@ export function CategoriesTable({
             <IconButton
                 color="secondary"
                 onClick={(params) => handleDelete(rowData.value)}
-                aria-label="delete"
-            >
+                aria-label="delete">
                 <DeleteIcon />
             </IconButton>
         )
     }
 
-    function renderIsActiveCell(rowData: GridRenderCellParams) {
+    function renderTypeCell(rowData: GridRenderCellParams) {
         return (
-            <Typography color={rowData.value ? "primary" : "secondary"}>
-                {rowData.value ? "Active" : "Inactive"}
+            <Typography color="primary">
+                {rowData.value === 1 ? "Director" : "Actor"}
             </Typography>
         )
     }
 
-    function renderNameCell(rowData: GridRenderCellParams) {
-        return (
-            <Link style={{ textDecoration: "none" }}
-                to={`/categories/edit/${rowData.id}`}>
-                <Typography color="primary">{rowData.value}</Typography>
-            </Link>
-        )
+    function mapDataToGridRows(data: Results) {
+        const { data: castMembers } = data;
+        return castMembers.map((castMember) => ({
+            id: castMember.id,
+            name: castMember.name,
+            type: castMember.type
+        }));
     }
 
     const rows = data ? mapDataToGridRows(data) : [];

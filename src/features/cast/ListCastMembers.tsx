@@ -4,6 +4,7 @@ import { GridFilterModel, GridPaginationModel } from "@mui/x-data-grid";
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { enqueueSnackbar, useSnackbar } from "notistack";
+import { CastMembersTable } from "./components/CastMembersTable";
 
 export const ListCastMembers = () => {
     const initialOptions = {
@@ -15,9 +16,7 @@ export const ListCastMembers = () => {
 
     const [options, setOptions] = useState(initialOptions);
     const { enqueueSnackbar } = useSnackbar();
-
     const { data, isFetching, error } = useGetCastMembersQuery(options);
-
     const [ deleteCastMember, deleteCastMemberStatus ] = useDeleteCastMemberMutation();
 
     async function handleDeleteCastMember(id: string) {
@@ -67,6 +66,16 @@ export const ListCastMembers = () => {
                     New Cast Member
                 </Button>
             </Box>
+            <CastMembersTable 
+                data={data}
+                perPage={options.perPage}
+                isFetching={isFetching}
+                rowsPerPage={options.rowsPerPage}
+                page={options.page}            
+                handleDelete={handleDeleteCastMember}
+                handleOnPageChange={handleOnPageChange}
+                handleFilterChange={handleFilterChange} 
+                />
         </Box>
     );
 }
