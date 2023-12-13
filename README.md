@@ -19,6 +19,11 @@ Running the app
 yarn start
 ```
 
+Generate test coverage statistics
+```
+yarn test --coverage
+```
+
 Chrome extension:
 [Redux DevTools](https://chromewebstore.google.com/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?pli=1)
 
@@ -30,6 +35,8 @@ Chrome extension:
 - [@mui/x-data-grid](https://mui.com/x/react-data-grid/getting-started/) - Data grid with filter, pagination, ordering, etc.
 - [@mui/icons-material](https://mui.com/material-ui/icons/) - Icons from Material Design
 - [notistack](https://notistack.com/) - React Snackbars
+- [@testing-library/react](https://testing-library.com/) - Testing library
+- [msw](https://mswjs.io/) - Mock Service Worker 
 
 
 ### External References
