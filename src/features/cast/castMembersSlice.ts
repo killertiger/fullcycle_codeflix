@@ -38,7 +38,7 @@ function getCastMembers(params: CastMemberParams) {
     return `${endpointUrl}?${parseQueryParams({ page, perPage, search, type })}`;
 }
 
-function getCastMember({id}: {id: string}) {
+function getCastMember({ id }: { id: string }) {
     return {
         method: "GET",
         url: `${endpointUrl}/${id}`,
@@ -56,7 +56,7 @@ function updateCastMember(castMember: CastMember) {
     return {
         url: `${endpointUrl}/${castMember.id}`,
         method: "PUT",
-        data: castMember,
+        body: castMember,
     };
 }
 
@@ -64,7 +64,7 @@ function createCastMember(castMember: CastMember) {
     return {
         url: endpointUrl,
         method: "POST",
-        data: castMember,
+        body: castMember,
     };
 }
 
@@ -74,7 +74,7 @@ export const castMemberApiSlice = apiSlice.injectEndpoints({
             query: getCastMembers,
             providesTags: ["CastMembers"],
         }),
-        getCastMember: query<Result, {id: string}>({
+        getCastMember: query<Result, { id: string }>({
             query: getCastMember,
             providesTags: ["CastMembers"]
         }),
