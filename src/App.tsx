@@ -10,6 +10,7 @@ import { CategoryCreate } from './features/categories/CreateCategory';
 import { CategoryEdit } from './features/categories/EditCategory';
 import { SnackbarProvider, enqueueSnackbar } from 'notistack';
 import { ListCastMembers } from './features/cast/ListCastMembers';
+import { CreateCastMember } from './features/cast/CreateCastMember';
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
 
               {/* Cast Members */}
               <Route path="/cast-members" element={<ListCastMembers />} />
+              <Route path="/cast-members/create" element={<CreateCastMember />} />
 
               <Route path="*" element={
                 <Box sx={{ color: "white" }}>
