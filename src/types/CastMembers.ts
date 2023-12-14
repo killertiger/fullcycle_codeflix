@@ -14,15 +14,15 @@ export interface CastMember {
     id: string;
     name: string;
     type: number;
-    deletedAt: null;
-    createdAt: string;
-    updatedAt: string;
+    deleted_at: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface Links {
     first: string;
     last: string;
-    prev: null;
+    prev: string;
     next: string;
 }
 
