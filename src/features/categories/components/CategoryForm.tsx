@@ -9,7 +9,7 @@ type Props = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  };
+};
 
 export function CategoryForm({
     category,
@@ -18,7 +18,7 @@ export function CategoryForm({
     handleSubmit,
     handleChange,
     handleToggle,
-}:Props) {
+}: Props) {
     return (
         <Box p={2}>
             <form onSubmit={handleSubmit}>
@@ -70,7 +70,10 @@ export function CategoryForm({
                                 Back
                             </Button>
 
-                            <Button type="submit" variant="contained" color="secondary" disabled={isDisabled}>
+                            <Button type="submit"
+                                variant="contained"
+                                color="secondary"
+                                disabled={isDisabled || isLoading}>
                                 Save
                             </Button>
                         </Box>
