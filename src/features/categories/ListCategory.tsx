@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDeleteCategoryMutation, useGetCategoriesQuery } from "./categorySlice";
-import { CategoriesTable } from "./components/CategoryTable";
+import { CategoryTable } from "./components/CategoryTable";
 
 export const CategoryList = () => {
     const [page, setPage]  = useState(0);
@@ -65,7 +65,7 @@ export const CategoryList = () => {
                     New Category
                 </Button>
             </Box>
-            <CategoriesTable
+            <CategoryTable
                 data={data}
                 isFetching={isFetching}
                 perPage={perPage}

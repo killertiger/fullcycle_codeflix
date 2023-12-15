@@ -14,11 +14,10 @@ type Props = {
 
     handleOnPageChange: (pageModel: GridPaginationModel) => void;
     handleFilterChange: (filterModel: GridFilterModel) => void;
-    // handleOnPageSizeChange: (pageSize: number) => void;
     handleDelete: (id: string) => void;
 };
 
-export function CategoriesTable({
+export function CategoryTable({
     data,
     perPage,
     page,
@@ -26,7 +25,6 @@ export function CategoriesTable({
     rowsPerPage,
     handleOnPageChange,
     handleFilterChange,
-    // handleOnPageSizeChange,
     handleDelete,
 }: Props) {
 

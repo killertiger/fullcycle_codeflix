@@ -13,7 +13,7 @@ export interface Result {
 export interface Category {
     id: string;
     name: string;
-    deleted_at: string;
+    deleted_at: null | string;
     is_active: boolean;
     created_at: string;
     updated_at: string;
@@ -21,7 +21,7 @@ export interface Category {
 }
 
 export interface Links {
-    prev: null;
+    prev: null | string;
     last: string;
     next: string;
     first: string;
