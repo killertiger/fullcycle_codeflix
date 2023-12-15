@@ -21,7 +21,7 @@ yarn start
 
 Generate test coverage statistics
 ```
-yarn test --coverage
+yarn test --coverage .
 ```
 
 Chrome extension:

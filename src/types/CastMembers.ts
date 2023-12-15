@@ -14,7 +14,7 @@ export interface CastMember {
     id: string;
     name: string;
     type: number;
-    deleted_at: string;
+    deleted_at: null | string;
     created_at: string;
     updated_at: string;
 }
@@ -22,23 +22,23 @@ export interface CastMember {
 export interface Links {
     first: string;
     last: string;
-    prev: string;
-    next: string;
+    prev: null | string;
+    next: null | string;
 }
 
 export interface Meta {
-    currentPage: number;
+    current_page: number;
     from: number;
-    lastPage: number;
+    last_page: number;
     path: string;
-    perPage: number;
+    per_page: number;
     to: number;
     total: number;
 }
 
 export interface CastMemberParams {
     page?: number;
-    perPage?: number;
+    per_page?: number;
     search?: string;
     type?: number;
 }
