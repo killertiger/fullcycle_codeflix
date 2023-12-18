@@ -50,15 +50,30 @@ describe("CategoryTable", () => {
     });
 
     it("should render CategoryTable with loading", () => {
-        const {asFragment} = render(<CategoryTable {...Props} isFetching={true} />);
+        const { asFragment } = render(<CategoryTable {...Props} isFetching={true} />);
 
         expect(asFragment()).toMatchSnapshot();
     });
 
     it("should render CategoryTable with data", () => {
-        const {asFragment} = render(<CategoryTable {...Props} data={mockData} />,
-        { wrapper: BrowserRouter });
+        const { asFragment } = render(<CategoryTable {...Props} data={mockData} />,
+            { wrapper: BrowserRouter });
 
         expect(asFragment()).toMatchSnapshot();
+    });
+
+    it("should render CategoryTable with Inactive value", () => {
+
+        const inputData = {
+            ...mockData,
+            data: [{ ...mockData.data[0], is_active: false }]
+        }
+
+        const { asFragment } = render(<CategoryTable {...Props} data={inputData} />,
+            { wrapper: BrowserRouter }
+        );
+
+        expect(asFragment()).toMatchSnapshot();
+
     });
 })
