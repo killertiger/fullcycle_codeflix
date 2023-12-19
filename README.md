@@ -36,7 +36,7 @@ Chrome extension:
 - [@mui/icons-material](https://mui.com/material-ui/icons/) - Icons from Material Design
 - [notistack](https://notistack.com/) - React Snackbars
 - [@testing-library/react](https://testing-library.com/) - Testing library
-- [msw](https://mswjs.io/) - Mock Service Worker 
+- [msw](https://mswjs.io/) - Mock Service Worker for APIs
 
 
 ### External References
