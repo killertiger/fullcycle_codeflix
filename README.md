@@ -13,6 +13,11 @@ docker compose up -d backend
 
 ## Development
 
+Install packages
+```
+yarn install
+``` 
+
 Running the app
 
 ```
