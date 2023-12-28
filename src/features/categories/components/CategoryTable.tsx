@@ -49,11 +49,11 @@ export function CategoryTable({
             type: 'boolean',
             renderCell: renderIsActiveCell,
         },
-        {
-            field: 'createdAt',
-            headerName: 'Created At',
-            flex: 1
-        },
+        // {
+        //     field: 'createdAt',
+        //     headerName: 'Created At',
+        //     flex: 1
+        // },
         {
             field: 'id',
             headerName: 'Actions',
@@ -78,6 +78,7 @@ export function CategoryTable({
                 color="secondary"
                 onClick={(params) => handleDelete(rowData.value)}
                 aria-label="delete"
+                data-testid="delete-button"
             >
                 <DeleteIcon />
             </IconButton>

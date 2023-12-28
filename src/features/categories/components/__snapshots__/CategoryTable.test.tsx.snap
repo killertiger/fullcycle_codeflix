@@ -6,7 +6,7 @@ exports[`CategoryTable should render CategoryTable with Inactive value 1`] = `
     class="MuiBox-root css-1fat0eg"
   >
     <div
-      aria-colcount="4"
+      aria-colcount="3"
       aria-multiselectable="false"
       aria-rowcount="2"
       class="MuiDataGrid-root MuiDataGrid-root--densityStandard MuiDataGrid-withBorderColor css-ptkaw2-MuiDataGrid-root"
@@ -325,10 +325,10 @@ exports[`CategoryTable should render CategoryTable with Inactive value 1`] = `
               </div>
               <div
                 aria-colindex="3"
-                aria-label="Created At"
+                aria-label="Actions"
                 aria-sort="none"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable MuiDataGrid-withBorderColor"
-                data-field="createdAt"
+                data-field="id"
                 role="columnheader"
                 style="height: 56px; width: 0px; min-width: 0; max-width: 0;"
                 tabindex="-1"
@@ -350,7 +350,7 @@ exports[`CategoryTable should render CategoryTable with Inactive value 1`] = `
                         class="MuiDataGrid-columnHeaderTitle css-t89xny-MuiDataGrid-columnHeaderTitle"
                         data-mui-internal-clone-element="true"
                       >
-                        Created At
+                        Actions
                       </div>
                     </div>
                     <div
@@ -494,17 +494,35 @@ exports[`CategoryTable should render CategoryTable with Inactive value 1`] = `
                 <div
                   aria-colindex="3"
                   aria-colspan="1"
-                  class="MuiDataGrid-cell MuiDataGrid-cell--textLeft MuiDataGrid-withBorderColor"
+                  class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft MuiDataGrid-withBorderColor"
                   data-colindex="2"
-                  data-field="createdAt"
+                  data-field="id"
                   role="cell"
                   style="min-width: 0; max-width: 0; min-height: 52px; max-height: 52px;"
                   tabindex="-1"
                 >
-                  <div
-                    class="MuiDataGrid-cellContent"
-                    role="presentation"
-                  />
+                  <button
+                    aria-label="delete"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSecondary MuiIconButton-sizeMedium css-1gws2xf-MuiButtonBase-root-MuiIconButton-root"
+                    data-testid="delete-button"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="DeleteIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                      />
+                    </svg>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -627,7 +645,7 @@ exports[`CategoryTable should render CategoryTable with data 1`] = `
     class="MuiBox-root css-1fat0eg"
   >
     <div
-      aria-colcount="4"
+      aria-colcount="3"
       aria-multiselectable="false"
       aria-rowcount="2"
       class="MuiDataGrid-root MuiDataGrid-root--densityStandard MuiDataGrid-withBorderColor css-ptkaw2-MuiDataGrid-root"
@@ -946,10 +964,10 @@ exports[`CategoryTable should render CategoryTable with data 1`] = `
               </div>
               <div
                 aria-colindex="3"
-                aria-label="Created At"
+                aria-label="Actions"
                 aria-sort="none"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable MuiDataGrid-withBorderColor"
-                data-field="createdAt"
+                data-field="id"
                 role="columnheader"
                 style="height: 56px; width: 0px; min-width: 0; max-width: 0;"
                 tabindex="-1"
@@ -971,7 +989,7 @@ exports[`CategoryTable should render CategoryTable with data 1`] = `
                         class="MuiDataGrid-columnHeaderTitle css-t89xny-MuiDataGrid-columnHeaderTitle"
                         data-mui-internal-clone-element="true"
                       >
-                        Created At
+                        Actions
                       </div>
                     </div>
                     <div
@@ -1115,17 +1133,35 @@ exports[`CategoryTable should render CategoryTable with data 1`] = `
                 <div
                   aria-colindex="3"
                   aria-colspan="1"
-                  class="MuiDataGrid-cell MuiDataGrid-cell--textLeft MuiDataGrid-withBorderColor"
+                  class="MuiDataGrid-cell--withRenderer MuiDataGrid-cell MuiDataGrid-cell--textLeft MuiDataGrid-withBorderColor"
                   data-colindex="2"
-                  data-field="createdAt"
+                  data-field="id"
                   role="cell"
                   style="min-width: 0; max-width: 0; min-height: 52px; max-height: 52px;"
                   tabindex="-1"
                 >
-                  <div
-                    class="MuiDataGrid-cellContent"
-                    role="presentation"
-                  />
+                  <button
+                    aria-label="delete"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorSecondary MuiIconButton-sizeMedium css-1gws2xf-MuiButtonBase-root-MuiIconButton-root"
+                    data-testid="delete-button"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                      data-testid="DeleteIcon"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"
+                      />
+                    </svg>
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
                 </div>
               </div>
             </div>
@@ -1248,7 +1284,7 @@ exports[`CategoryTable should render CategoryTable with loading 1`] = `
     class="MuiBox-root css-1fat0eg"
   >
     <div
-      aria-colcount="4"
+      aria-colcount="3"
       aria-multiselectable="false"
       aria-rowcount="1"
       class="MuiDataGrid-root MuiDataGrid-root--densityStandard MuiDataGrid-withBorderColor css-ptkaw2-MuiDataGrid-root"
@@ -1567,10 +1603,10 @@ exports[`CategoryTable should render CategoryTable with loading 1`] = `
               </div>
               <div
                 aria-colindex="3"
-                aria-label="Created At"
+                aria-label="Actions"
                 aria-sort="none"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable MuiDataGrid-withBorderColor"
-                data-field="createdAt"
+                data-field="id"
                 role="columnheader"
                 style="height: 56px; width: 0px; min-width: 0; max-width: 0;"
                 tabindex="-1"
@@ -1592,7 +1628,7 @@ exports[`CategoryTable should render CategoryTable with loading 1`] = `
                         class="MuiDataGrid-columnHeaderTitle css-t89xny-MuiDataGrid-columnHeaderTitle"
                         data-mui-internal-clone-element="true"
                       >
-                        Created At
+                        Actions
                       </div>
                     </div>
                     <div
@@ -1838,7 +1874,7 @@ exports[`CategoryTable should render correctly 1`] = `
     class="MuiBox-root css-1fat0eg"
   >
     <div
-      aria-colcount="4"
+      aria-colcount="3"
       aria-multiselectable="false"
       aria-rowcount="1"
       class="MuiDataGrid-root MuiDataGrid-root--densityStandard MuiDataGrid-withBorderColor css-ptkaw2-MuiDataGrid-root"
@@ -2157,10 +2193,10 @@ exports[`CategoryTable should render correctly 1`] = `
               </div>
               <div
                 aria-colindex="3"
-                aria-label="Created At"
+                aria-label="Actions"
                 aria-sort="none"
                 class="MuiDataGrid-columnHeader MuiDataGrid-columnHeader--sortable MuiDataGrid-withBorderColor"
-                data-field="createdAt"
+                data-field="id"
                 role="columnheader"
                 style="height: 56px; width: 0px; min-width: 0; max-width: 0;"
                 tabindex="-1"
@@ -2182,7 +2218,7 @@ exports[`CategoryTable should render correctly 1`] = `
                         class="MuiDataGrid-columnHeaderTitle css-t89xny-MuiDataGrid-columnHeaderTitle"
                         data-mui-internal-clone-element="true"
                       >
-                        Created At
+                        Actions
                       </div>
                     </div>
                     <div
