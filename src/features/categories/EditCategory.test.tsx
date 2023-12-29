@@ -30,7 +30,7 @@ const server = setupServer(...handlers);
 describe("EditCategory", () => {
     beforeAll(() => server.listen());;
     afterAll(() => server.close());
-    beforeEach(() => server.resetHandlers());
+    afterEach(() => server.resetHandlers());
 
     it("should render correctly", () => {
         const { asFragment } = renderWithProviders(<CategoryEdit />);
