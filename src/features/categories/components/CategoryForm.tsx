@@ -62,6 +62,8 @@ export function CategoryForm({
                                         onChange={handleToggle}
                                         checked={category.is_active}
                                         inputProps={{ "aria-label": "controlled" }}
+                                        data-testid="is_active"
+                                        disabled={isDisabled}
                                     />
                                 }
                             />
