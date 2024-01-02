@@ -109,4 +109,27 @@ describe("ListCastMembers", () => {
             expect(message).toBeInTheDocument();
          });
     });
+
+    it("should handle delete cast member error", async() => {
+        server.use(
+            rest.delete(`${baseUrl}/cast_members/fecfffa3-07b8-472e-9337-e70ce746ddb1`, (_, res, ctx) => {
+                return res(ctx.status(500));
+            })
+        );
+
+        renderWithProviders(<ListCastMembers/>);
+
+        await waitFor(() => {
+            const name = screen.getByText("Jerde");
+            expect(name).toBeInTheDocument();
+        });
+
+        const deleteButton = screen.getAllByTestId("delete-button")[0];
+        fireEvent.click(deleteButton);
+
+        await waitFor(() => {
+            const message = screen.getByText("Cast member not deleted");
+            expect(message).toBeInTheDocument();
+        });
+    });
 });
