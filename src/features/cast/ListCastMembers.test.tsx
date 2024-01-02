@@ -13,6 +13,9 @@ const handlers = [
 
         return res(ctx.delay(150), ctx.json(castMemberResponse));
     }),
+    rest.delete(`${baseUrl}/cast_members/fecfffa3-07b8-472e-9337-e70ce746ddb1`, (_, res, ctx) => {
+        return res(ctx.delay(150), ctx.status(204));
+    }),
 ];
 
 const server = setupServer(...handlers);
@@ -88,5 +91,22 @@ describe("ListCastMembers", () => {
             const loading = screen.getByRole("progressbar");
             expect(loading).toBeInTheDocument();
         });
+    });
+
+    it("should handle delete cast member success", async() => {
+        renderWithProviders(<ListCastMembers/>);
+
+         await waitFor(() => {
+            const name = screen.getByText("Jerde");
+            expect(name).toBeInTheDocument();
+         });
+
+         const deleteButton = screen.getAllByTestId("delete-button")[0];
+         fireEvent.click(deleteButton);
+
+         await waitFor(() => {
+            const message = screen.getByText("Cast member deleted successfully");
+            expect(message).toBeInTheDocument();
+         });
     });
 });
