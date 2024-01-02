@@ -15,7 +15,7 @@ export const initialState: CastMember = {
 function parseQueryParams(params: CastMemberParams) {
     const query = new URLSearchParams();
     if (params.page) {
-        query.append("page", params.page.toString());
+        query.append("page", (params.page  + 1).toString());
     }
 
     if (params.per_page) {

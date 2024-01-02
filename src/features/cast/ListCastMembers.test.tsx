@@ -1,12 +1,16 @@
 import {rest} from "msw";
 import {setupServer} from "msw/node";
-import { renderWithProviders, screen, waitFor } from "../../utils/test-utils";
+import { fireEvent, renderWithProviders, screen, waitFor } from "../../utils/test-utils";
 import { ListCastMembers } from "./ListCastMembers";
 import { baseUrl } from "../api/apiSlice";
-import { castMemberResponse } from "./mocks";
+import { castMemberResponse, castMemberResponse2 } from "./mocks";
 
 const handlers = [
-    rest.get(`${baseUrl}/cast_members`, (_, res, ctx) => {
+    rest.get(`${baseUrl}/cast_members`, (req, res, ctx) => {
+        if(req.url.searchParams.get("page") === "2") {
+            return res(ctx.delay(150), ctx.json(castMemberResponse2));
+        }
+
         return res(ctx.delay(150), ctx.json(castMemberResponse));
     }),
 ];
@@ -49,6 +53,40 @@ describe("ListCastMembers", () => {
         await waitFor(() => {
             const error = screen.getByText("Error!");
             expect(error).toBeInTheDocument();
+        });
+    });
+
+    it("should handle On PageChange", async() => {
+        renderWithProviders(<ListCastMembers />);
+
+        await waitFor(() => {
+            const name = screen.getByText("Jerde");
+            expect(name).toBeInTheDocument();
+        });
+
+        const nextButton = screen.getByTestId("KeyboardArrowRightIcon");
+        fireEvent.click(nextButton);
+
+        await waitFor(() => {
+            const name = screen.getByText("Wiegand");
+            expect(name).toBeInTheDocument();
+        });
+    });
+
+    it("should handle filter change", async() => {
+        renderWithProviders(<ListCastMembers/>);
+
+        await waitFor(() => {
+            const name = screen.getByText("Jerde");
+            expect(name).toBeInTheDocument();
+        });
+
+        const input = screen.getByPlaceholderText("Search…");
+        fireEvent.change(input, {target: {value: "Crooks"}});
+
+        await waitFor(() => {
+            const loading = screen.getByRole("progressbar");
+            expect(loading).toBeInTheDocument();
         });
     });
 });
