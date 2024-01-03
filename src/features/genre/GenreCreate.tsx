@@ -1,7 +1,42 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { GenreForm } from "./components/GenreForm";
+import { useSnackbar } from "notistack";
+import { initialState  as genreInitialState, useCreateGenreMutation, useGetAllCategoriesQuery } from "./genreSlice";
+import { useEffect, useState } from "react";
+import { Genre } from "../../types/Genre";
 
 export const GenreCreate = () => {
+    const { enqueueSnackbar } = useSnackbar();
+    const {data: categories}  = useGetAllCategoriesQuery();
+    const [createGenre, status] = useCreateGenreMutation();
+    const [genreState, setGenreState] = useState<Genre>(genreInitialState);
+    
+
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = event.target;
+        setGenreState((state) => ({ ...state, [name]: value }));
+    }
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        await createGenre({
+            id: genreState.id,
+            name: genreState.name,
+            categories_id: genreState.categories?.map((category) => category.id),
+        });
+    }
+
+    useEffect(() => {
+        if (status.isSuccess) {
+            enqueueSnackbar("Genre created successfully", { variant: "success" });
+        }
+        if (status.isError) {
+            enqueueSnackbar("Error creating genre", { variant: "error" });
+        }
+    })
+
     return (
         <Box>
             <Paper>
@@ -10,15 +45,15 @@ export const GenreCreate = () => {
                         <Typography variant="h4">Genre Create</Typography>
                     </Box>
                 </Box>
+                <GenreForm
+                    genre={genreState}
+                    categories={categories?.data}
+                    isLoading={status.isLoading}
+                    isDisabled={status.isLoading}
+                    handleSubmit={handleSubmit}
+                    handleChange={handleChange}
+                />
             </Paper>
-            <GenreForm
-                genre={{}}
-                categories={[]}
-                isLoading={false}
-                isDisabled={false}
-                handleSubmit={() => { }}
-                handleChange={() => { }}
-            />
         </Box>
     );
 }
