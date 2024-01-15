@@ -5,7 +5,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 type Props = {
-    data: Results;
+    data: Results | undefined;
     perPage: number;
     page: number;
     isFetching: boolean;

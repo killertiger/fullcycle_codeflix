@@ -1,9 +1,10 @@
-import { Box, Button } from "@mui/material"
+import { Box, Button, Typography } from "@mui/material"
 import { Link } from "react-router-dom"
 import { GenreTable } from "./components/GenreTable"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSnackbar } from "notistack"
 import { useDeleteGenreMutation, useGetGenresQuery } from "./genreSlice"
+import { GridFilterModel, GridPaginationModel } from "@mui/x-data-grid"
 
 export const GenreList = () => {
     const [options, setOptions] = useState({
@@ -18,6 +19,43 @@ export const GenreList = () => {
 
     async function handleDeleteGenre(id: string) {
         await deleteGenre({ id });
+    }
+
+    async function handleOnPageChange(pageModel: GridPaginationModel) {
+        setOptions({
+            ...options,
+            page: pageModel.page,
+            perPage: pageModel.pageSize
+        });
+    }
+
+    function handleFilterChange(filterModel: GridFilterModel) {
+        if (filterModel.quickFilterValues?.length) {
+            const search = filterModel.quickFilterValues.join("");
+            setOptions({
+                ...options,
+                search: search
+            });
+        }
+        else {
+            setOptions({
+                ...options,
+                search: ""
+            });
+        }
+    }
+
+    useEffect(() => {
+        if(deleteGenreStatus.isSuccess) {
+            enqueueSnackbar("Genre deleted successfully", { variant: "success" });
+        }
+        else if (deleteGenreStatus.isError) {
+            enqueueSnackbar("Genre not deleted", { variant: "error" });
+        }
+    }, [deleteGenreStatus, enqueueSnackbar]);
+
+    if(error) {
+        return <Typography variant="h2">Error fetching genres!</Typography>
     }
 
     return (
@@ -36,10 +74,10 @@ export const GenreList = () => {
 
             <GenreTable
                 data={data}
+                perPage={options.perPage}
                 isFetching={isFetching}
-                perPage={perPage}
-                rowsPerPage={rowsPerPage}
-                page={page}
+                rowsPerPage={options.rowsPerPage}
+                page={options.page}
                 handleDelete={handleDeleteGenre}
                 handleOnPageChange={handleOnPageChange}
                 handleFilterChange={handleFilterChange}
