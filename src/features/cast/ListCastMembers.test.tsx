@@ -8,13 +8,13 @@ import { castMemberResponse, castMemberResponse2 } from "./mocks";
 const handlers = [
     rest.get(`${baseUrl}/cast_members`, (req, res, ctx) => {
         if(req.url.searchParams.get("page") === "2") {
-            return res(ctx.delay(150), ctx.json(castMemberResponse2));
+            return res(ctx.json(castMemberResponse2));
         }
 
-        return res(ctx.delay(150), ctx.json(castMemberResponse));
+        return res(ctx.json(castMemberResponse));
     }),
     rest.delete(`${baseUrl}/cast_members/fecfffa3-07b8-472e-9337-e70ce746ddb1`, (_, res, ctx) => {
-        return res(ctx.delay(150), ctx.status(204));
+        return res(ctx.status(204));
     }),
 ];
 

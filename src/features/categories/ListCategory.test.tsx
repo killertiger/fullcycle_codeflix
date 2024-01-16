@@ -11,13 +11,13 @@ export const handlers = [
     rest.get(`${baseUrl}/categories`, async (req, res, ctx) => {
 
         if (req.url.searchParams.get("page") === "2") {
-            return res(ctx.json(categoryResponsePage2), ctx.delay(150));
+            return res(ctx.json(categoryResponsePage2));
         }
 
-        return res(ctx.json(categoryResponse), ctx.delay(150));
+        return res(ctx.json(categoryResponse));
     }),
     rest.delete(`${baseUrl}/categories/dd5378ef-1241-4b2e-b2d6-4b8dc8a2972d`, async (_, res, ctx) => {
-        return res(ctx.delay(150), ctx.status(204));
+        return res(ctx.status(204));
     }),
 ];
 
