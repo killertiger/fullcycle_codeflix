@@ -10,10 +10,10 @@ import { Genre } from "../../types/Genre";
 import { useEffect, useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { GenreForm } from "./components/GenreForm";
-
+import { mapGenreToForm } from "./utils";
 
 export const GenreEdit = () => {
-    const id = useParams<{ id: string }>().id as string;
+    const id = useParams<{ id: string }>().id || "";
     const { data: genre, isFetching } = useGetGenreQuery({ id });
     const { enqueueSnackbar } = useSnackbar();
     const { data: categories } = useGetAllCategoriesQuery();
@@ -27,11 +27,7 @@ export const GenreEdit = () => {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        await updateGenre({
-            id: genreState.id,
-            name: genreState.name,
-            categories_id: genreState.categories?.map((category) => category.id),
-        });
+        await updateGenre(mapGenreToForm(genreState));
     }
 
     useEffect(() => {
