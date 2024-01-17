@@ -24,13 +24,11 @@ export const CategoryList = () => {
     }
 
     function handleOnPageChange(pageModel: GridPaginationModel) {
-        console.log("handleOnPageChange " + pageModel.page);
         setPage(pageModel.page);
         setPerPage(pageModel.pageSize);
     }
 
     function handleFilterChange(filterModel: GridFilterModel) {
-        console.log("handleFilterChange");
         if(filterModel.quickFilterValues?.length) {
             const search = filterModel.quickFilterValues.join("");
             setSearch(search);

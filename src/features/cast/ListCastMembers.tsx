@@ -22,7 +22,6 @@ export const ListCastMembers = () => {
     }
 
     function handleOnPageChange(pageModel: GridPaginationModel) {
-        console.log(pageModel.page);
         setOptions({
             ...options,
             page: pageModel.page,
