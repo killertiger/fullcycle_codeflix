@@ -1,8 +1,9 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid, GridColDef, GridFilterModel, GridPaginationModel, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
 import { Results } from "../../../types/Videos";
-import { Box, Chip, IconButton, Typography } from "@mui/material";
+import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { Genre } from "../../../types/Genre";
 
 type Props = {
     data: Results | undefined;
@@ -61,10 +62,34 @@ export function VideosTable({
     }
 
     function renderGenresCell(params: GridRenderCellParams) {
-        const genres = params.value;
+        const genres = params.value as Genre[];
+        const twoFirstGenres = genres.slice(0, 2);
+        const remaningGenres = genres.length - twoFirstGenres.length;
+
         return (
             <Box style={{ overflowX: "scroll" }}>
-                {genres.map((genre: any) => <Chip label={genre.name} sx={{ mr: 1 }} />)}
+                {twoFirstGenres.map((genre: Genre, index) => (
+                    <Chip
+                        key={index}
+                        label={genre.name}
+                        sx={{
+                            fontSize: "0.6rem",
+                            marginRight: 1,
+                        }} />
+                )
+                )}
+
+                {remaningGenres > 0 && (
+                    <Tooltip title={(genres.slice(2).map((genre) => genre.name).join(", "))}>
+                        <Chip
+                            sx={{
+                                fontSize: "0.6rem",
+                                marginRight: 1,
+                            }}
+                            label={`+${remaningGenres}`}
+                        />
+                    </Tooltip>
+                )}
             </Box>
         )
     }
