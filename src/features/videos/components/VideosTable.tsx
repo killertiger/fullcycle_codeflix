@@ -1,7 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid, GridColDef, GridFilterModel, GridPaginationModel, GridRenderCellParams, GridToolbar } from "@mui/x-data-grid";
 import { Results } from "../../../types/Videos";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Chip, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -37,15 +37,37 @@ export function VideosTable({
         const { data: videos } = data;
         return videos.map((video) => ({
             id: video.id,
-            name: video.title,
+            title: video.title,
+            genres: video.genres,
+            categories: video.categories,
         }));
     }
 
     const columns: GridColDef[] = [
-        { field: "name", headerName: "Name", flex: 1, renderCell: renderNameCell },
-        { field: "id", headerName: "Actions", flex: 1, renderCell: renderActionsCell},
+        { field: "title", headerName: "Title", flex: 1, renderCell: renderNameCell },
+        { field: "genres", headerName: "Genres", flex: 1, renderCell: renderGenresCell },
+        { field: "categories", headerName: "Categories", flex: 1, renderCell: renderCategoriesCell },
+        { field: "id", headerName: "Actions", flex: 1, renderCell: renderActionsCell },
 
     ]
+
+    function renderCategoriesCell(params: GridRenderCellParams) {
+        const categories = params.value;
+        return (
+            <Box style={{ overflowX: "scroll" }}>
+                {categories.map((category: any) => <Chip label={category.name} sx={{ mr: 1 }} />)}
+            </Box>
+        );
+    }
+
+    function renderGenresCell(params: GridRenderCellParams) {
+        const genres = params.value;
+        return (
+            <Box style={{ overflowX: "scroll" }}>
+                {genres.map((genre: any) => <Chip label={genre.name} sx={{ mr: 1 }} />)}
+            </Box>
+        )
+    }
 
     function renderActionsCell(params: GridRenderCellParams) {
         return (
@@ -54,7 +76,7 @@ export function VideosTable({
                 onClick={() => handleDelete(params.value)}
                 aria-label="delete"
                 data-testid="delete-button">
-                    <DeleteIcon/>
+                <DeleteIcon />
             </IconButton>
         )
     }

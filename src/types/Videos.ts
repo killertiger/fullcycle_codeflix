@@ -22,7 +22,7 @@ export interface Video {
     opened: boolean;
     rating: string;
     duration: number;
-    deleted_at?: string;
+    deleted_at?: string | null;
     created_at: string;
     updated_at: string;
     genres?: Genre[];
