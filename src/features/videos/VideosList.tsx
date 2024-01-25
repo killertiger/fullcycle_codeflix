@@ -51,7 +51,7 @@ export const VideosList = () => {
         if(deleteVideoStatus.error) {
             enqueueSnackbar("Video not deleted", { variant: "error"});
         }
-    });
+    }, [deleteVideoStatus, enqueueSnackbar]);
 
 
     if (error) {
