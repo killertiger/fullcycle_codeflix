@@ -4,6 +4,7 @@ import { Results } from "../../../types/Videos";
 import { Box, Chip, IconButton, Tooltip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Genre } from "../../../types/Genre";
+import { Category } from "../../../types/Categories";
 
 type Props = {
     data: Results | undefined;
@@ -53,10 +54,34 @@ export function VideosTable({
     ]
 
     function renderCategoriesCell(params: GridRenderCellParams) {
-        const categories = params.value;
+        const categories = params.value as Category[];
+        const twoFirstCategories = categories.slice(0, 2);
+        const remainingCategories = categories.length - twoFirstCategories.length;
+
         return (
             <Box style={{ overflowX: "scroll" }}>
-                {categories.map((category: any) => <Chip label={category.name} sx={{ mr: 1 }} />)}
+                {/* {categories.map((category: any) => <Chip label={category.name} sx={{ mr: 1 }} />)} */}
+                {twoFirstCategories.map((category, index) => (
+                    <Chip key={index}
+                        sx={{
+                            fontSize: "0.6rem",
+                            marginRight: 1,
+                        }}
+                        label={category.name}
+                    />
+                ))}
+
+                {remainingCategories > 0 && (
+                    <Tooltip title={(categories.slice(2).map((categories) => categories.name).join(", "))}>
+                        <Chip
+                            sx={{
+                                fontSize: "0.6rem",
+                                marginRight: 1,
+                            }}
+                            label={`+${remainingCategories}`}
+                        />
+                    </Tooltip>
+                )}
             </Box>
         );
     }
@@ -64,7 +89,7 @@ export function VideosTable({
     function renderGenresCell(params: GridRenderCellParams) {
         const genres = params.value as Genre[];
         const twoFirstGenres = genres.slice(0, 2);
-        const remaningGenres = genres.length - twoFirstGenres.length;
+        const remainingGenres = genres.length - twoFirstGenres.length;
 
         return (
             <Box style={{ overflowX: "scroll" }}>
@@ -79,14 +104,14 @@ export function VideosTable({
                 )
                 )}
 
-                {remaningGenres > 0 && (
+                {remainingGenres > 0 && (
                     <Tooltip title={(genres.slice(2).map((genre) => genre.name).join(", "))}>
                         <Chip
                             sx={{
                                 fontSize: "0.6rem",
                                 marginRight: 1,
                             }}
-                            label={`+${remaningGenres}`}
+                            label={`+${remainingGenres}`}
                         />
                     </Tooltip>
                 )}

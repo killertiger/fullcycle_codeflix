@@ -1,9 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { VideosTable } from "./components/VideosTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GridFilterModel, GridPaginationModel } from "@mui/x-data-grid";
-import { useGetVideosQuery } from "./VideoSlice";
+import { useDeleteVideoMutation, useGetVideosQuery } from "./VideoSlice";
+import { enqueueSnackbar } from "notistack";
 
 export const VideosList = () => {
     const [options, setOptions] = useState({
@@ -13,9 +14,10 @@ export const VideosList = () => {
         rowsPerPage: [10, 20, 30]
     });
     const { data, isFetching, error } = useGetVideosQuery(options);
+    const [deleteVideo, deleteVideoStatus] = useDeleteVideoMutation();
 
-    function handleDeleteVideo(id: string) {
-        console.log("Delete video with id: ", id);
+    async function handleDeleteVideo(id: string) {
+        await deleteVideo({ id });
     }
 
     async function handleOnPageChange(pageModel: GridPaginationModel) {
@@ -41,6 +43,15 @@ export const VideosList = () => {
             });
         }
     }
+
+    useEffect(() => {
+        if(deleteVideoStatus.isSuccess) {
+            enqueueSnackbar("Video deleted successfully", { variant: "success"});
+        }
+        if(deleteVideoStatus.error) {
+            enqueueSnackbar("Video not deleted", { variant: "error"});
+        }
+    });
 
 
     if (error) {
