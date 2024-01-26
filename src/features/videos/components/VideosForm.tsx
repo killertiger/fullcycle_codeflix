@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Genre } from "../../../types/Genre";
 import { Category } from "../../../types/Categories";
 import { CastMember } from "../../../types/CastMembers";
+import { AutoCompleteFields } from "../../../components/AutoCompleteFields";
 
 type Props = {
     video: Video;
@@ -83,99 +84,36 @@ export function VideosForm({
                         </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                        <Autocomplete
-                            disablePortal
-                            multiple
-                            loading={isLoading}
-                            id="combo-box-demo"
+                        <AutoCompleteFields
+                            name="categories"
+                            label="Categories"
                             options={categories || []}
-                            value={video.categories}
-                            disabled={isDisabled || !categories}
-                            getOptionLabel={(option) => option.name}
-                            renderOption={(props, option) => (
-                                <li {...props} key={option.id}>
-                                    {option.name}
-                                </li>
-                            )}
-                            onChange={(_, newValue) => {
-                                handleChange({
-                                    target: {
-                                        name: "categories",
-                                        value: newValue,
-                                    }
-                                } as any);
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Categories"
-                                    data-testid="categories-input"
-                                />
-                            )}
+                            values={video.categories}
+                            isDisabled={isDisabled}
+                            isLoading={isLoading}
+                            handleChange={handleChange}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Autocomplete
-                            disablePortal
-                            multiple
-                            loading={isLoading}
-                            id="combo-box-demo"
+                        <AutoCompleteFields
+                            name="genres"
+                            label="Genres"
                             options={genres || []}
-                            value={video.genres}
-                            disabled={isDisabled || !genres}
-                            getOptionLabel={(option) => option.name}
-                            renderOption={(props, option) => (
-                                <li {...props} key={option.id}>
-                                    {option.name}
-                                </li>
-                            )}
-                            onChange={(_, newValue) => {
-                                handleChange({
-                                    target: {
-                                        name: "genres",
-                                        value: newValue,
-                                    }
-                                } as any);
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Genres"
-                                    data-testid="genres-input"
-                                />
-                            )}
+                            values={video.genres}
+                            isDisabled={isDisabled}
+                            isLoading={isLoading}
+                            handleChange={handleChange}
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Autocomplete
-                            disablePortal
-                            multiple
-                            loading={isLoading}
-                            id="combo-box-demo"
+                        <AutoCompleteFields
+                            name="cast_members"
+                            label="Cast Members"
                             options={cast_members || []}
-                            value={video.cast_members}
-                            disabled={isDisabled || !cast_members}
-                            getOptionLabel={(option) => option.name}
-                            renderOption={(props, option) => (
-                                <li {...props} key={option.id}>
-                                    {option.name}
-                                </li>
-                            )}
-                            onChange={(_, newValue) => {
-                                handleChange({
-                                    target: {
-                                        name: "cast_members",
-                                        value: newValue,
-                                    }
-                                } as any);
-                            }}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Cast Members"
-                                    data-testid="cast_members-input"
-                                />
-                            )}
+                            values={video.cast_members}
+                            isDisabled={isDisabled}
+                            isLoading={isLoading}
+                            handleChange={handleChange}
                         />
                     </Grid>
                     <Grid item xs={12}>
