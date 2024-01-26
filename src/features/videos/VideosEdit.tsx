@@ -1,9 +1,11 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, fabClasses } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { initialState, useGetVideoQuery } from "./VideoSlice";
-import { useEffect, useState } from "react";
-import { Video } from "../../types/Videos";
+import { initialState, useGetVideoQuery, useUpdateVideoMutation } from "./VideoSlice";
+import { HtmlHTMLAttributes, useEffect, useState } from "react";
+import { Video, VideoPayload } from "../../types/Videos";
 import { enqueueSnackbar } from "notistack";
+import { VideosForm } from "./components/VideosForm";
+import { mapVideoToForm } from "./util";
 
 export function VideosEdit() {
     const id = useParams<{ id: string }>().id as string;
@@ -11,6 +13,19 @@ export function VideosEdit() {
     const { data: video, isFetching } = useGetVideoQuery({ id });
 
     const [videoState, setVideoState] = useState<Video>(initialState);
+    const [updateVideo, status] = useUpdateVideoMutation();
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>){
+        const { name, value } = event.target;
+        setVideoState((state) => ({ ...state, [name]: value }));
+    }
+
+    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        const payload = mapVideoToForm(videoState);
+        updateVideo(payload);
+    }
 
     useEffect(() => {
         if (video) {
@@ -19,6 +34,15 @@ export function VideosEdit() {
     }, [video]);
 
     console.log(videoState);
+
+    useEffect(() => {
+        if(status.isSuccess) {
+            enqueueSnackbar('Video updated successfully', { variant: 'success' });
+        }
+        else if(status.isError) {
+            enqueueSnackbar('Video update failed', { variant: 'error' });
+        }
+    }, [status, enqueueSnackbar]);
 
     return (
         <Box>
@@ -29,6 +53,16 @@ export function VideosEdit() {
                     </Box>
                 </Box>
 
+                <VideosForm 
+                    video={videoState}
+                    genres={[]}
+                    categories={[]}
+                    cast_members={[]}
+                    isDisabled={isFetching}
+                    isLoading={isFetching}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                />
 
             </Paper>
         </Box>

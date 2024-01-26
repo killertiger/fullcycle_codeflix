@@ -57,3 +57,16 @@ export interface VideoParams {
     search?: string;
     isActive?: boolean;
 }
+
+export interface VideoPayload {
+    id: string;
+    title: string;
+    description: string;
+    opened: boolean;
+    year_launched: number;
+    rating: string;
+    duration: number;
+    categories_id?: string[];
+    genres_id?: string[];
+    cast_members_id?: string[];
+}
