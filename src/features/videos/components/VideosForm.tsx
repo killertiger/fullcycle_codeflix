@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, FormControl, Grid, TextField } from "@mui/material";
 import { Video } from "../../../types/Videos";
 import { Link } from "react-router-dom";
 import { Genre } from "../../../types/Genre";
@@ -81,6 +81,102 @@ export function VideosForm({
                                 inputProps={{ "data-testid": "duration" }}
                             />
                         </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Autocomplete
+                            disablePortal
+                            multiple
+                            loading={isLoading}
+                            id="combo-box-demo"
+                            options={categories || []}
+                            value={video.categories}
+                            disabled={isDisabled || !categories}
+                            getOptionLabel={(option) => option.name}
+                            renderOption={(props, option) => (
+                                <li {...props} key={option.id}>
+                                    {option.name}
+                                </li>
+                            )}
+                            onChange={(_, newValue) => {
+                                handleChange({
+                                    target: {
+                                        name: "categories",
+                                        value: newValue,
+                                    }
+                                } as any);
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Categories"
+                                    data-testid="categories-input"
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Autocomplete
+                            disablePortal
+                            multiple
+                            loading={isLoading}
+                            id="combo-box-demo"
+                            options={genres || []}
+                            value={video.genres}
+                            disabled={isDisabled || !genres}
+                            getOptionLabel={(option) => option.name}
+                            renderOption={(props, option) => (
+                                <li {...props} key={option.id}>
+                                    {option.name}
+                                </li>
+                            )}
+                            onChange={(_, newValue) => {
+                                handleChange({
+                                    target: {
+                                        name: "genres",
+                                        value: newValue,
+                                    }
+                                } as any);
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Genres"
+                                    data-testid="genres-input"
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Autocomplete
+                            disablePortal
+                            multiple
+                            loading={isLoading}
+                            id="combo-box-demo"
+                            options={cast_members || []}
+                            value={video.cast_members}
+                            disabled={isDisabled || !cast_members}
+                            getOptionLabel={(option) => option.name}
+                            renderOption={(props, option) => (
+                                <li {...props} key={option.id}>
+                                    {option.name}
+                                </li>
+                            )}
+                            onChange={(_, newValue) => {
+                                handleChange({
+                                    target: {
+                                        name: "cast_members",
+                                        value: newValue,
+                                    }
+                                } as any);
+                            }}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Cast Members"
+                                    data-testid="cast_members-input"
+                                />
+                            )}
+                        />
                     </Grid>
                     <Grid item xs={12}>
                         <Box display="flex" gap={2}>
