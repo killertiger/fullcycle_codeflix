@@ -87,7 +87,7 @@ export function VideosForm({
                         <AutoCompleteFields
                             name="categories"
                             label="Categories"
-                            options={categories || []}
+                            options={categories}
                             values={video.categories}
                             isDisabled={isDisabled}
                             isLoading={isLoading}
@@ -98,7 +98,7 @@ export function VideosForm({
                         <AutoCompleteFields
                             name="genres"
                             label="Genres"
-                            options={genres || []}
+                            options={genres}
                             values={video.genres}
                             isDisabled={isDisabled}
                             isLoading={isLoading}
@@ -109,7 +109,7 @@ export function VideosForm({
                         <AutoCompleteFields
                             name="cast_members"
                             label="Cast Members"
-                            options={cast_members || []}
+                            options={cast_members}
                             values={video.cast_members}
                             isDisabled={isDisabled}
                             isLoading={isLoading}

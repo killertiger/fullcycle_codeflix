@@ -1,6 +1,6 @@
 import { Box, Paper, Typography, fabClasses } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { initialState, useGetVideoQuery, useUpdateVideoMutation } from "./VideoSlice";
+import { initialState, useGetAllCastMembersQuery, useGetAllCategoriesQuery, useGetAllGenresQuery, useGetVideoQuery, useUpdateVideoMutation } from "./VideoSlice";
 import { HtmlHTMLAttributes, useEffect, useState } from "react";
 import { Video, VideoPayload } from "../../types/Videos";
 import { enqueueSnackbar } from "notistack";
@@ -14,6 +14,10 @@ export function VideosEdit() {
 
     const [videoState, setVideoState] = useState<Video>(initialState);
     const [updateVideo, status] = useUpdateVideoMutation();
+
+    const { data: categories } = useGetAllCategoriesQuery();
+    const { data: genres } = useGetAllGenresQuery();
+    const { data: cast_members } = useGetAllCastMembersQuery();
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>){
         const { name, value } = event.target;
@@ -55,9 +59,9 @@ export function VideosEdit() {
 
                 <VideosForm 
                     video={videoState}
-                    genres={[]}
-                    categories={[]}
-                    cast_members={[]}
+                    genres={genres?.data}
+                    categories={categories?.data}
+                    cast_members={cast_members?.data}
                     isDisabled={isFetching}
                     isLoading={isFetching}
                     handleChange={handleChange}
