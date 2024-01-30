@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, FormControl, Grid, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, TextField } from "@mui/material";
 import { Video } from "../../../types/Videos";
 import { Link } from "react-router-dom";
 import { Genre } from "../../../types/Genre";
@@ -16,6 +16,15 @@ type Props = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+const ratingOptions = [
+    { label: "L", value: "L" },
+    { label: "10", value: "10" },
+    { label: "12", value: "12" },
+    { label: "14", value: "14" },
+    { label: "16", value: "16" },
+    { label: "18", value: "18" },
+]
 
 export function VideosForm({
     video,
@@ -116,6 +125,33 @@ export function VideosForm({
                             handleChange={handleChange}
                         />
                     </Grid>
+
+                    <Grid item xs={12}>
+                        <FormControl>
+                            <FormLabel
+                                component="legend"
+                                sx={{ mb: 2 }}
+                            >
+                                Rating
+                            </FormLabel>
+                            <RadioGroup
+                                name="rating"
+                                value={video.rating}
+                                onChange={handleChange}
+                                row
+                            >
+                                {ratingOptions.map((option) => (
+                                    <FormControlLabel
+                                        key={option.value}
+                                        value={option.value}
+                                        control={<Radio />}
+                                        label={option.label}
+                                    />
+                                ))}
+                            </RadioGroup>
+                        </FormControl>
+                    </Grid>
+
                     <Grid item xs={12}>
                         <Box display="flex" gap={2}>
                             <Button variant="contained" component={Link} to="/videos">Back</Button>
