@@ -5,6 +5,8 @@ import { Genre } from "../../../types/Genre";
 import { Category } from "../../../types/Categories";
 import { CastMember } from "../../../types/CastMembers";
 import { AutoCompleteFields } from "../../../components/AutoCompleteFields";
+import { Rating } from "../../../components/Rating";
+import { RatingsList } from "../../../components/RatingsList";
 
 type Props = {
     video: Video;
@@ -140,14 +142,7 @@ export function VideosForm({
                                 onChange={handleChange}
                                 row
                             >
-                                {ratingOptions.map((option) => (
-                                    <FormControlLabel
-                                        key={option.value}
-                                        value={option.value}
-                                        control={<Radio />}
-                                        label={option.label}
-                                    />
-                                ))}
+                                <RatingsList isDisabled={isDisabled} />
                             </RadioGroup>
                         </FormControl>
                     </Grid>
