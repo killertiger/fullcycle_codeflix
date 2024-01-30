@@ -74,7 +74,7 @@ export function VideosForm({
                                 required
                                 name="year_launched"
                                 label="Year Launched"
-                                value={video.description}
+                                value={video.year_launched}
                                 disabled={isDisabled}
                                 onChange={handleChange}
                                 inputProps={{ "data-testid": "year_launched" }}

@@ -1,9 +1,43 @@
 import { Box, Paper, Typography } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { VideosForm } from './components/VideosForm';
-import { initialState } from './VideoSlice';
+import { initialState, useGetAllCategoriesQuery, useGetAllGenresQuery, useGetAllCastMembersQuery, useCreateVideoMutation } from './VideoSlice';
+import { useSnackbar } from 'notistack';
+import { Video } from '../../types/Videos';
+import { mapVideoToForm } from './util';
 
 export const VideosCreate = () => {
+    const {enqueueSnackbar} = useSnackbar();
+    
+    const {data: categories} = useGetAllCategoriesQuery();
+    const {data: genres} = useGetAllGenresQuery();
+    const {data: cast_members} = useGetAllCastMembersQuery();
+
+    const [createVideo, status] = useCreateVideoMutation();
+    const [videoState, setVideoState] = useState<Video>(initialState);
+    
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>){
+        const { name, value } = event.target;
+        setVideoState((state) => ({...state, [name]: value}));
+    }
+
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        await createVideo(mapVideoToForm(videoState))
+    }
+
+    useEffect(() => {
+        if(status.isSuccess) {
+            enqueueSnackbar('Video created successfully', { variant: 'success' });
+        }
+        
+        if(status.isError) {
+            enqueueSnackbar('Video creation failed', { variant: 'error' });
+        }
+
+    }, [status, enqueueSnackbar]);
+
     return (
         <Box>
             <Paper>
@@ -14,14 +48,14 @@ export const VideosCreate = () => {
                 </Box>
 
                 <VideosForm
-                    video={initialState}
-                    genres={[]}
-                    categories={[]}
-                    cast_members={[]}
-                    isDisabled={false}
-                    isLoading={false}
-                    handleChange={() => { }}
-                    handleSubmit={() => { }}
+                    video={videoState}
+                    genres={genres?.data}
+                    categories={categories?.data}
+                    cast_members={cast_members?.data}
+                    isDisabled={status.isLoading}
+                    isLoading={status.isLoading}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
                 />
             </Paper>
         </Box>
