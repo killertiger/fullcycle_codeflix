@@ -1,4 +1,5 @@
-import { Divider, List, ListItem, Toolbar, Typography } from "@mui/material";
+import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from "@mui/material";
+import { Link, Router } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -7,7 +8,7 @@ type Props = {
     onClose: () => void,
 }
 
-export function ResponsiveDrawer() {
+export function ResponsiveDrawer({ open, onClose }: Props) {
     const routes = [
         { path: "/", name: "Categories" },
         { path: "/cast-members", name: "Cast Members" },
@@ -22,18 +23,55 @@ export function ResponsiveDrawer() {
                 <Typography variant="h6" noWrap component="div">
                     Codeflix
                 </Typography>
-                <Divider/>
-                <List>
-                    {routes.map((route) => (
-                        <ListItem disablePadding>
-                            <Typography key={route.name}>{route.name}</Typography>
-                        </ListItem>
-                    ))}
-                </List>
-
             </Toolbar>
+            <Divider />
+            <List>
+                {routes.map((route, key) => (
+                    <Link
+                        key={route.path}
+                        to={route.path}
+                        onClick={onClose}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemText key={route.name}>{route.name}</ListItemText>
+                            </ListItemButton>
+                        </ListItem>
+                    </Link>
+                ))}
+            </List>
         </div>
     )
 
-    return <div>ResponsiveDrawer</div>
+    return (<Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+    >
+        <Drawer
+            variant="temporary"
+            open={open}
+            onClose={onClose}
+            ModalProps={{
+                keepMounted: true,
+            }}
+            sx={{
+                display: { xs: "block", sm: "none" },
+                "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+            }}
+        >
+            {drawer}
+        </Drawer>
+
+        <Drawer
+            variant="permanent"
+            open
+            sx={{
+                display: { xs: "none", sm: "block" },
+                "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+            }}
+        >
+            {drawer}
+        </Drawer>
+    </Box>)
 }

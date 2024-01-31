@@ -6,33 +6,33 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 export function Header({
     toggleTheme,
-    theme
+    theme,
+    handleDrawerToggle,
 }: {
     toggleTheme: () => void,
-    theme: string
+    theme: string,
+    handleDrawerToggle?: () => void,
 }) {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        News
-                    </Typography>
+        <Box>
+            <Toolbar>
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 2, display: { sm: "none" } }}
+                    onClick={handleDrawerToggle}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Box sx={{ flexGrow: 1 }} />
+                <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
+                    {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
 
-                    <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
-                        {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-                    </IconButton>
-                    <Button color="inherit">Login</Button>
-                </Toolbar>
-            </AppBar>
-        </Box>)
+                <Button color="inherit">Login</Button>
+            </Toolbar>
+        </Box>
+    )
 }
