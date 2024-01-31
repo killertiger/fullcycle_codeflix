@@ -148,7 +148,15 @@ export function VideosForm({
                         </FormControl>
 
                         <FormControl fullWidth>
-                            <FormLabel component="legend">Imagem</FormLabel>
+                            <FormLabel component="legend">Thumb</FormLabel>
+                            <InputFile onChange={() => console.log("change")}/>
+                            <InputFile onChange={() => console.log("change")}/>
+                        </FormControl>
+
+
+                        <FormControl fullWidth>
+                            <FormLabel component="legend">Videos</FormLabel>
+                            <InputFile onChange={() => console.log("change")}/>
                             <InputFile onChange={() => console.log("change")}/>
                         </FormControl>
                     </Grid>

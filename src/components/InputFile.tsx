@@ -1,5 +1,7 @@
-import { Button, InputLabel, TextField } from "@mui/material";
+import { Button, IconButton, InputLabel, TextField } from "@mui/material";
 import { ChangeEvent, useRef, useState } from "react";
+import DeleteIcon from '@mui/icons-material/Delete';
+import FileIcon from '@mui/icons-material/FileCopy';
 
 interface Props {
     onChange: (file: File) => void;
@@ -17,30 +19,32 @@ export const InputFile: React.FC<Props> = ({ onChange }) => {
         fileInputRef.current?.click();
     };
 
+    const handleClear = () => {
+        setSelectedFiles(null);
+    };
+
     return (
         <>
             <TextField
                 type="text"
                 placeholder="Select a file"
-                onClick={handleFileInput}
+                // onClick={handleFileInput}
                 value={selectedFiles?.length ? selectedFiles[0].name : ""}
                 InputProps={{
                     readOnly: true,
-                    endAdornment: (
-                        <label htmlFor="file">
-                            <Button
-                                variant="contained"
-                                component="span"
-                                color="primary"
-                                sx={{ ml: 1 }}
-                            >
-                                Select
-                            </Button>
-                        </label>
-                    )
+                    endAdornment:
+                        selectedFiles?.length ? (
+                            <IconButton onClick={handleClear}>
+                                <DeleteIcon />
+                            </IconButton>
+                        ) : (
+                            <IconButton onClick={handleFileInput}>
+                                <FileIcon />
+                            </IconButton>
+                        )
                 }}
             />
-            <input
+            < input
                 accept="*"
                 type="file"
                 id="inputFile"
