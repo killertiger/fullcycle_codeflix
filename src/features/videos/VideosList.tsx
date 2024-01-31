@@ -65,7 +65,7 @@ export const VideosList = () => {
                     variant="contained"
                     color="secondary"
                     component={Link}
-                    to="/video/create"
+                    to="/videos/create"
                     style={{ marginBottom: "1rem" }}
                 >
                     New Video
