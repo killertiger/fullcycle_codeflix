@@ -6,6 +6,7 @@ import { useSnackbar } from 'notistack';
 import { Video } from '../../types/Videos';
 import { mapVideoToForm } from './util';
 import { Category } from '../../types/Categories';
+import { useUniqueCategories } from '../../hooks/useUniqueCategories';
 
 export const VideosCreate = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -16,8 +17,7 @@ export const VideosCreate = () => {
     const [createVideo, status] = useCreateVideoMutation();
     const [videoState, setVideoState] = useState<Video>(initialState);
 
-    const [uniqueCategoriesState, setUniqueCategoriesStates] = useState<(Category | undefined)[]>();
-    const categoriesToKeepRef = useRef<Category[] | undefined>(undefined);
+    const [categories]  = useUniqueCategories(videoState, setVideoState);
 
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -30,30 +30,6 @@ export const VideosCreate = () => {
         await createVideo(mapVideoToForm(videoState))
     }
 
-    const filterById = (
-        category: Category | undefined,
-        index: number,
-        self: (Category | undefined)[]
-    ): boolean => index === self.findIndex((c) => c?.id === category?.id);
-
-    useEffect(() => {
-        const uniqueCategories = videoState.genres?.flatMap(({ categories }) => categories).filter(filterById) as Category[];
-
-        setUniqueCategoriesStates(uniqueCategories);
-    }, [videoState.genres])
-
-    useEffect(() => {
-        categoriesToKeepRef.current = videoState.categories?.filter(
-            (category) => uniqueCategoriesState?.find((c) => c?.id === category.id)
-        );
-    }, [uniqueCategoriesState, videoState.categories]);
-
-    useEffect(() => {
-        setVideoState((state: Video) => ({
-            ...state,
-            categories: categoriesToKeepRef.current
-        }));
-    }, [uniqueCategoriesState, setVideoState])
 
     useEffect(() => {
         if (status.isSuccess) {
@@ -78,7 +54,7 @@ export const VideosCreate = () => {
                 <VideosForm
                     video={videoState}
                     genres={genres?.data}
-                    categories={uniqueCategoriesState as Category[]}
+                    categories={categories}
                     cast_members={cast_members?.data}
                     isDisabled={status.isLoading}
                     isLoading={status.isLoading}

@@ -6,6 +6,7 @@ import { Video, VideoPayload } from "../../types/Videos";
 import { enqueueSnackbar } from "notistack";
 import { VideosForm } from "./components/VideosForm";
 import { mapVideoToForm } from "./util";
+import { useUniqueCategories } from "../../hooks/useUniqueCategories";
 
 export function VideosEdit() {
     const id = useParams<{ id: string }>().id as string;
@@ -14,8 +15,8 @@ export function VideosEdit() {
 
     const [videoState, setVideoState] = useState<Video>(initialState);
     const [updateVideo, status] = useUpdateVideoMutation();
+    const [categories, setCategories] = useUniqueCategories(videoState, setVideoState);
 
-    const { data: categories } = useGetAllCategoriesQuery();
     const { data: genres } = useGetAllGenresQuery();
     const { data: cast_members } = useGetAllCastMembersQuery();
 
@@ -34,10 +35,9 @@ export function VideosEdit() {
     useEffect(() => {
         if (video) {
             setVideoState(video.data);
+            setCategories(video.data.categories || []);
         }
-    }, [video]);
-
-    console.log(videoState);
+    }, [video, setCategories]);
 
     useEffect(() => {
         if(status.isSuccess) {
@@ -60,7 +60,7 @@ export function VideosEdit() {
                 <VideosForm 
                     video={videoState}
                     genres={genres?.data}
-                    categories={categories?.data}
+                    categories={categories}
                     cast_members={cast_members?.data}
                     isDisabled={isFetching}
                     isLoading={isFetching}
