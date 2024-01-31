@@ -3,7 +3,7 @@ import { Box, ThemeProvider } from '@mui/system'
 import { Header } from './components/Header';
 import { CssBaseline, Typography, createTheme } from '@mui/material';
 import { Layout } from './components/Layout';
-import { appTheme } from './config/theme';
+import { darkTheme, lightTheme } from './config/theme';
 import { Routes, Route, Link } from 'react-router-dom';
 import { CategoryList } from './features/categories/ListCategory';
 import { CategoryCreate } from './features/categories/CreateCategory';
@@ -18,10 +18,18 @@ import { GenreList } from './features/genre/GenreList';
 import { VideosList } from './features/videos/VideosList';
 import { VideosCreate } from './features/videos/VideosCreate';
 import { VideosEdit } from './features/videos/VideosEdit';
+import { useState } from 'react';
 
 export default function App() {
+  const [theme, setTheme] = useState(darkTheme);
+
+  const toggleTheme = () => {
+    const currentTheme = theme.palette.mode === "dark" ? lightTheme : darkTheme;
+    setTheme(currentTheme);
+  }
+
   return (
-    <ThemeProvider theme={appTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <SnackbarProvider
         autoHideDuration={2000}
@@ -34,7 +42,7 @@ export default function App() {
           height: '100vh',
           backgroundColor: (theme) => theme.palette.grey[900],
         }}>
-          <Header />
+          <Header toggleTheme={toggleTheme} />
           <Layout>
             <h1>Welcome</h1>
             <Routes>

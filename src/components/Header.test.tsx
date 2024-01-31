@@ -3,7 +3,9 @@ import { Header } from "./Header";
 
 describe("Header", () => {
     it("should render correctly", () => {
-        const { asFragment } = render(<Header />);
+        const { asFragment } = render(<Header
+            toggleTheme={() => { }}
+        />);
         expect(asFragment()).toMatchSnapshot();
     });
 });
