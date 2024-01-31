@@ -7,6 +7,7 @@ import { CastMember } from "../../../types/CastMembers";
 import { AutoCompleteFields } from "../../../components/AutoCompleteFields";
 import { Rating } from "../../../components/Rating";
 import { RatingsList } from "../../../components/RatingsList";
+import { InputFile } from "../../../components/InputFile";
 
 type Props = {
     video: Video;
@@ -144,6 +145,11 @@ export function VideosForm({
                             >
                                 <RatingsList isDisabled={isDisabled} />
                             </RadioGroup>
+                        </FormControl>
+
+                        <FormControl fullWidth>
+                            <FormLabel component="legend">Imagem</FormLabel>
+                            <InputFile onChange={() => console.log("change")}/>
                         </FormControl>
                     </Grid>
 
