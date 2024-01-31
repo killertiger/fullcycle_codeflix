@@ -1,8 +1,16 @@
 import React from 'react';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-export function Header({ toggleTheme }: { toggleTheme: () => void }) {
+export function Header({
+    toggleTheme,
+    theme
+}: {
+    toggleTheme: () => void,
+    theme: string
+}) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -19,13 +27,10 @@ export function Header({ toggleTheme }: { toggleTheme: () => void }) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         News
                     </Typography>
-                    <Button
-                        color="inherit"
-                        onClick={toggleTheme}
-                    >
-                        Toggle theme
-                    </Button>
 
+                    <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
+                        {theme === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                    </IconButton>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>

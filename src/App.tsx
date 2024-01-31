@@ -18,7 +18,7 @@ import { GenreList } from './features/genre/GenreList';
 import { VideosList } from './features/videos/VideosList';
 import { VideosCreate } from './features/videos/VideosCreate';
 import { VideosEdit } from './features/videos/VideosEdit';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function App() {
   const [theme, setTheme] = useState(darkTheme);
@@ -26,7 +26,15 @@ export default function App() {
   const toggleTheme = () => {
     const currentTheme = theme.palette.mode === "dark" ? lightTheme : darkTheme;
     setTheme(currentTheme);
+    localStorage.setItem("theme", currentTheme.palette.mode);
   }
+
+  useEffect(() => {
+    const currentTheme = localStorage.getItem("theme");
+    if(currentTheme) {
+      setTheme(theme.palette.mode === "dark" ? lightTheme : darkTheme);
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -42,7 +50,7 @@ export default function App() {
           height: '100vh',
           backgroundColor: (theme) => theme.palette.grey[900],
         }}>
-          <Header toggleTheme={toggleTheme} />
+          <Header toggleTheme={toggleTheme} theme={theme.palette.mode}/>
           <Layout>
             <h1>Welcome</h1>
             <Routes>
