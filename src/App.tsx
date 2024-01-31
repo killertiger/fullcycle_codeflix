@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, ThemeProvider } from '@mui/system'
 import { Header } from './components/Header';
-import { Typography, createTheme } from '@mui/material';
+import { CssBaseline, Typography, createTheme } from '@mui/material';
 import { Layout } from './components/Layout';
 import { appTheme } from './config/theme';
 import { Routes, Route, Link } from 'react-router-dom';
@@ -22,6 +22,7 @@ import { VideosEdit } from './features/videos/VideosEdit';
 export default function App() {
   return (
     <ThemeProvider theme={appTheme}>
+      <CssBaseline />
       <SnackbarProvider
         autoHideDuration={2000}
         maxSnack={3}
