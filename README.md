@@ -42,6 +42,7 @@ Chrome extension:
 - [notistack](https://notistack.com/) - React Snackbars
 - [@testing-library/react](https://testing-library.com/) - Testing library
 - [msw](https://mswjs.io/) - Mock Service Worker for APIs
+- [axios](https://axios-http.com/docs/intro) - Promise based HTTP client for the browser and node.js
 
 
 ### External References
