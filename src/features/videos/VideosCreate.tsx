@@ -7,7 +7,7 @@ import { initialState, useCreateVideoMutation, useGetAllCastMembersQuery, useGet
 import { VideosForm } from './components/VideosForm';
 import { mapVideoToForm } from './util';
 import { useAppDispatch } from '../../app/hooks';
-import { addUpload, removeUpload } from '../UploadList/UploadSlice';
+import { addUpload, removeUpload, setUploadProgress } from '../UploadList/UploadSlice';
 import { nanoid } from '@reduxjs/toolkit';
 
 
@@ -45,6 +45,7 @@ export const VideosCreate = () => {
         await createVideo(mapVideoToForm(videoState));
 
         // const mockID = nanoid();
+        // let progress = 0;
         // // mock add video
         // dispatch(
         //     addUpload({
@@ -54,6 +55,17 @@ export const VideosCreate = () => {
         //         field: "test",
         //     })
         // );
+
+        // setTimeout(() => {
+        //     dispatch(
+        //         setUploadProgress({
+        //             id: mockID,
+        //             progress: progress + 50,
+        //         })
+        //     );
+        // }, 2000);
+
+
         // setTimeout(() => {
         //     dispatch(removeUpload(mockID));
         // }, 3000);
