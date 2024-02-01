@@ -15,12 +15,14 @@ import { VideosCreate } from './features/videos/VideosCreate';
 import { VideosEdit } from './features/videos/VideosEdit';
 import { VideosList } from './features/videos/VideosList';
 import { useAppTheme } from './hooks/useAppTheme';
+import { UploadList } from './features/UploadList/UploadList';
 
 export default function App() {
   const [currentTheme, toggleCurrentTheme] = useAppTheme();
 
   return (
     <Layout>
+      <UploadList/>
       <Routes>
         <Route path="/" element={<CategoryList />} />
 
