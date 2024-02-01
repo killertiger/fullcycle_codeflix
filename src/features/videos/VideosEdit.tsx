@@ -66,6 +66,8 @@ export function VideosEdit() {
                     isLoading={isFetching}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
+                    handleAddFile={() => {}}
+                    handleRemoveFile={() => {}}
                 />
 
             </Paper>

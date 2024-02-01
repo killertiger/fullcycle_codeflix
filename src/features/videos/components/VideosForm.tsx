@@ -18,6 +18,8 @@ type Props = {
     isLoading?: boolean;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleAddFile: (files: FileList | null) => void;
+    handleRemoveFile: (file: File) => void;
 }
 
 const ratingOptions = [
@@ -38,6 +40,8 @@ export function VideosForm({
     isLoading = false,
     handleSubmit,
     handleChange,
+    handleAddFile,
+    handleRemoveFile,
 }: Props) {
     return (
         <Box>
@@ -149,15 +153,15 @@ export function VideosForm({
 
                         <FormControl fullWidth>
                             <FormLabel component="legend">Thumb</FormLabel>
-                            <InputFile onChange={() => console.log("change")}/>
-                            <InputFile onChange={() => console.log("change")}/>
+                            <InputFile onAdd={handleAddFile} onRemove={handleRemoveFile}/>
+                            <InputFile onAdd={handleAddFile} onRemove={handleRemoveFile}/>
                         </FormControl>
 
 
                         <FormControl fullWidth>
                             <FormLabel component="legend">Videos</FormLabel>
-                            <InputFile onChange={() => console.log("change")}/>
-                            <InputFile onChange={() => console.log("change")}/>
+                            <InputFile onAdd={handleAddFile} onRemove={handleRemoveFile}/>
+                            <InputFile onAdd={handleAddFile} onRemove={handleRemoveFile}/>
                         </FormControl>
                     </Grid>
 

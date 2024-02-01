@@ -1,18 +1,20 @@
-import { Button, IconButton, InputLabel, TextField } from "@mui/material";
-import { ChangeEvent, useRef, useState } from "react";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileIcon from '@mui/icons-material/FileCopy';
+import { IconButton, TextField } from "@mui/material";
+import { ChangeEvent, useRef, useState } from "react";
 
 interface Props {
-    onChange: (file: File) => void;
+    onAdd: (file: FileList) => void;
+    onRemove: (file: File) => void;
 }
 
-export const InputFile: React.FC<Props> = ({ onChange }) => {
+export const InputFile: React.FC<Props> = ({ onAdd, onRemove }: Props) => {
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSelectedFiles(event.target.files);
+        onAdd(event.target.files as FileList);
     };
 
     const handleFileInput = () => {
@@ -21,6 +23,9 @@ export const InputFile: React.FC<Props> = ({ onChange }) => {
 
     const handleClear = () => {
         setSelectedFiles(null);
+        if (selectedFiles) {
+            onRemove(selectedFiles[0]);
+        }
     };
 
     return (

@@ -17,8 +17,22 @@ export const VideosCreate = () => {
     const [createVideo, status] = useCreateVideoMutation();
     const [videoState, setVideoState] = useState<Video>(initialState);
 
-    const [categories]  = useUniqueCategories(videoState, setVideoState);
+    const [categories] = useUniqueCategories(videoState, setVideoState);
+    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
+    console.log("selectedFiles", selectedFiles);
+
+    function handleAddFile(files: FileList | null) {
+        if (!files) {
+          return;
+        }
+        const filesArr = Array.from(files);
+        setSelectedFiles([...selectedFiles, ...filesArr]);
+    }
+
+    function handleRemoveFile(file: File) {
+        setSelectedFiles(selectedFiles.filter((f) => f !== file));
+    }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const { name, value } = event.target;
@@ -60,6 +74,8 @@ export const VideosCreate = () => {
                     isLoading={status.isLoading}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
+                    handleAddFile={handleAddFile}
+                    handleRemoveFile={handleRemoveFile}
                 />
             </Paper>
         </Box>
