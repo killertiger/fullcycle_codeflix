@@ -25,10 +25,8 @@ export const VideosCreate = () => {
 
     const dispatch = useAppDispatch();
 
-    console.log("selectedFiles", selectedFiles);
-
-    function handleAddFile({name, file}: FileObject) {
-        setSelectedFiles([...selectedFiles, {name, file}]);
+    function handleAddFile({ name, file }: FileObject) {
+        setSelectedFiles([...selectedFiles, { name, file }]);
     }
 
     function handleRemoveFile(name: string) {
@@ -40,9 +38,29 @@ export const VideosCreate = () => {
         setVideoState((state) => ({ ...state, [name]: value }));
     }
 
+    function handleSubmitUploads(videoId: string) {
+        selectedFiles.forEach((file) => {
+            const payload = {
+                id: nanoid(),
+                file: file.file,
+                videoId,
+                field: file.name
+            };
+            dispatch(addUpload(payload));
+        })
+    }
+
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        await createVideo(mapVideoToForm(videoState));
+
+        // const {id, ...payload } = mapVideoToForm(videoState);
+        const payload = mapVideoToForm(videoState);
+        try {
+            const { data } = await createVideo(payload).unwrap();
+            handleSubmitUploads(data.id);
+        } catch (e) {
+            enqueueSnackbar('Video creation failed', { variant: 'error' });
+        }
 
         // const mockID = nanoid();
         // let progress = 0;
@@ -71,7 +89,6 @@ export const VideosCreate = () => {
         // }, 3000);
 
     }
-
 
     useEffect(() => {
         if (status.isSuccess) {
