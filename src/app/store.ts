@@ -1,6 +1,7 @@
 import { Action, PreloadedState, ThunkAction, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../features/api/apiSlice';
 import { uploadReducer } from '../features/UploadList/UploadSlice';
+import { uploadQueue } from '../middleware/uploadQueue';
 
 
 const rootReducer = combineReducers({
@@ -13,7 +14,9 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
     reducer: rootReducer,
     preloadedState,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({ serializableCheck: false }).concat(apiSlice.middleware),
+      getDefaultMiddleware({ serializableCheck: false })
+      .prepend(uploadQueue.middleware)
+      .concat(apiSlice.middleware),
   });
 };
 
