@@ -22,7 +22,14 @@ export default function App() {
 
   return (
     <Layout>
-      <UploadList/>
+      <UploadList
+        uploads={[
+          { name: "upload 1", progress: 10 },
+          { name: "upload 2", progress: 20 },
+          { name: "upload 3", progress: 30 },
+          { name: "upload 4", progress: 40 },
+        ]}
+      />
       <Routes>
         <Route path="/" element={<CategoryList />} />
 

@@ -1,32 +1,55 @@
+import { UploadSharp } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box } from '@mui/material';
+import { Box, List, ListItem, Typography } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 
-export function UploadList() {
+type Upload = {
+    name: string;
+    progress: number;
+}
+
+type Props = {
+    uploads?: Upload[];
+}
+
+
+export const UploadList: React.FC<Props> = ({ uploads }) => {
+    if (!uploads) {
+        return null;
+    }
+
     return (
         <Box
             sx={{
                 width: '100%',
-                maxWidth: 450,
                 position: "fixed",
                 bottom: 0,
                 right: 0,
                 zIndex: 9,
+                "@media (min-width: 600px)": {
+                    width: 450,
+                },
             }}
         >
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1-content"
-                    id="panel1-header"
+                    aria-controls="upload-content"
                 >
-                    Accordion 1
+                    <Typography>Uploads</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                    malesuada lacus ex, sit amet blandit leo lobortis eget.
+                    <List>
+                        {
+                            uploads.map((upload, index) => (
+                                <ListItem key={index}>
+                                    <Typography>{upload.name}</Typography>
+                                </ListItem>
+                            ))
+                        }
+                    </List>
                 </AccordionDetails>
             </Accordion>
         </Box>
