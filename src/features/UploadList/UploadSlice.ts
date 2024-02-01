@@ -21,10 +21,16 @@ const uploadSlice = createSlice({
                 status: "idle",
                 progress: 0,
             });
-        }
+        },
+        removeUpload(state, action: PayloadAction<string>) {
+            const index = state.findIndex((upload) => upload.id === action.payload);
+            if(index !== -1) {
+                state.splice(index, 1);
+            }
+        },
     },
 });
 
-export const { addUpload } = uploadSlice.actions;
+export const { addUpload, removeUpload } = uploadSlice.actions;
 
 export const uploadReducer = uploadSlice.reducer;

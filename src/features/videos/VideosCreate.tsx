@@ -7,7 +7,7 @@ import { initialState, useCreateVideoMutation, useGetAllCastMembersQuery, useGet
 import { VideosForm } from './components/VideosForm';
 import { mapVideoToForm } from './util';
 import { useAppDispatch } from '../../app/hooks';
-import { addUpload } from '../UploadList/UploadSlice';
+import { addUpload, removeUpload } from '../UploadList/UploadSlice';
 import { nanoid } from '@reduxjs/toolkit';
 
 
@@ -24,15 +24,6 @@ export const VideosCreate = () => {
     const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
 
     const dispatch = useAppDispatch();
-    //mock add video
-    // dispatch(
-    //     addUpload({
-    //         id: nanoid(),
-    //         file: new File([], "test"),
-    //         videoId: "1",
-    //         field: "test",
-    //     })
-    // );
 
     console.log("selectedFiles", selectedFiles);
 
@@ -51,7 +42,22 @@ export const VideosCreate = () => {
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        await createVideo(mapVideoToForm(videoState))
+        await createVideo(mapVideoToForm(videoState));
+
+        // const mockID = nanoid();
+        // // mock add video
+        // dispatch(
+        //     addUpload({
+        //         id: mockID,
+        //         file: new File([], "test"),
+        //         videoId: "1",
+        //         field: "test",
+        //     })
+        // );
+        // setTimeout(() => {
+        //     dispatch(removeUpload(mockID));
+        // }, 3000);
+
     }
 
 
