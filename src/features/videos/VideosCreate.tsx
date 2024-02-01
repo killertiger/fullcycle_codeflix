@@ -6,6 +6,9 @@ import { FileObject, Video } from '../../types/Videos';
 import { initialState, useCreateVideoMutation, useGetAllCastMembersQuery, useGetAllGenresQuery } from './VideoSlice';
 import { VideosForm } from './components/VideosForm';
 import { mapVideoToForm } from './util';
+import { useAppDispatch } from '../../app/hooks';
+import { addUpload } from '../UploadList/UploadSlice';
+import { nanoid } from '@reduxjs/toolkit';
 
 
 export const VideosCreate = () => {
@@ -19,6 +22,17 @@ export const VideosCreate = () => {
 
     const [categories] = useUniqueCategories(videoState, setVideoState);
     const [selectedFiles, setSelectedFiles] = useState<FileObject[]>([]);
+
+    const dispatch = useAppDispatch();
+    //mock add video
+    // dispatch(
+    //     addUpload({
+    //         id: nanoid(),
+    //         file: new File([], "test"),
+    //         videoId: "1",
+    //         field: "test",
+    //     })
+    // );
 
     console.log("selectedFiles", selectedFiles);
 

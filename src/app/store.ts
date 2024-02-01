@@ -1,8 +1,11 @@
 import { Action, PreloadedState, ThunkAction, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../features/api/apiSlice';
+import { uploadReducer } from '../features/UploadList/UploadSlice';
+
 
 const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
+  uploadSlice: uploadReducer,
 });
 
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
