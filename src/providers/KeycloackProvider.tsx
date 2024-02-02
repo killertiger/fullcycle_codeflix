@@ -10,6 +10,21 @@ export const KeycloackProvider = ({ children }: {
     const dispatch = useDispatch();
 
     useEffect(() => {
+
+        const updateToken = (refresh = false) => {
+            if (refresh) {
+                keycloak.updateToken(70).then((refreshed) => {
+                    if (refreshed) {
+                        dispatch(setToken(keycloak.token));
+                    }
+                });
+            }
+        }
+
+        keycloak.onTokenExpired = async () => {
+            updateToken();
+        };
+
         const initKeycloack = async () => {
             try {
                 const isAuthenticated = await keycloak.init({
