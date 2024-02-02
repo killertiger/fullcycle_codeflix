@@ -6,19 +6,22 @@ import { setupStore } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { KeycloackProvider } from './providers/KeycloackProvider';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 const store = setupStore();
 
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <Provider store={store}>
+    <KeycloackProvider>
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </React.StrictMode>
+    </KeycloackProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
