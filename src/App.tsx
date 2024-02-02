@@ -16,6 +16,8 @@ import { VideosEdit } from './features/videos/VideosEdit';
 import { VideosList } from './features/videos/VideosList';
 import { useAppTheme } from './hooks/useAppTheme';
 import { UploadList } from './features/UploadList/UploadList';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { Login } from './components/Login';
 
 export default function App() {
   const [currentTheme, toggleCurrentTheme] = useAppTheme();
@@ -24,27 +26,29 @@ export default function App() {
     <Layout>
       <UploadList />
       <Routes>
-        <Route path="/" element={<CategoryList />} />
 
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/" element={<ProtectedRoute><CategoryList /></ProtectedRoute>} />
         {/* Category */}
-        <Route path="/categories" element={<CategoryList />} />
-        <Route path="/categories/create" element={<CategoryCreate />} />
-        <Route path="/categories/edit/:id" element={<CategoryEdit />} />
+        <Route path="/categories" element={<ProtectedRoute> <CategoryList /> </ProtectedRoute>} />
+        <Route path="/categories/create" element={<ProtectedRoute> <CategoryCreate /></ProtectedRoute>} />
+        <Route path="/categories/edit/:id" element={<ProtectedRoute> <CategoryEdit /></ProtectedRoute>} />
 
         {/* Cast Members */}
-        <Route path="/cast-members" element={<ListCastMembers />} />
-        <Route path="/cast-members/create" element={<CreateCastMember />} />
-        <Route path="/cast-members/edit/:id" element={<EditCastMember />} />
+        <Route path="/cast-members" element={<ProtectedRoute> <ListCastMembers /></ProtectedRoute>} />
+        <Route path="/cast-members/create" element={<ProtectedRoute> <CreateCastMember /></ProtectedRoute>} />
+        <Route path="/cast-members/edit/:id" element={<ProtectedRoute> <EditCastMember /></ProtectedRoute>} />
 
         {/* Genre */}
-        <Route path="/genres" element={<GenreList />} />
-        <Route path="/genres/create" element={<GenreCreate />} />
-        <Route path="/genres/edit/:id" element={<GenreEdit />} />
+        <Route path="/genres" element={<ProtectedRoute> <GenreList /></ProtectedRoute>} />
+        <Route path="/genres/create" element={<ProtectedRoute> <GenreCreate /></ProtectedRoute>} />
+        <Route path="/genres/edit/:id" element={<ProtectedRoute> <GenreEdit /></ProtectedRoute>} />
 
         {/* Videos */}
-        <Route path="/videos" element={<VideosList />} />
-        <Route path="/videos/create" element={<VideosCreate />} />
-        <Route path="/videos/edit/:id" element={<VideosEdit />} />
+        <Route path="/videos" element={<ProtectedRoute> <VideosList /></ProtectedRoute>} />
+        <Route path="/videos/create" element={<ProtectedRoute> <VideosCreate /></ProtectedRoute>} />
+        <Route path="/videos/edit/:id" element={<ProtectedRoute> <VideosEdit /></ProtectedRoute>} />
 
         <Route path="*" element={
           <Box sx={{ color: "white" }}>
