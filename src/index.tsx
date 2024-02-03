@@ -6,7 +6,7 @@ import { setupStore } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-import { KeycloackProvider } from './providers/KeycloackProvider';
+import { KeycloakProvider } from './providers/KeycloakProvider';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -14,13 +14,13 @@ const store = setupStore();
 
 root.render(
   <Provider store={store}>
-    <KeycloackProvider>
+    <KeycloakProvider>
       <React.StrictMode>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </React.StrictMode>
-    </KeycloackProvider>
+    </KeycloakProvider>
   </Provider>
 );
 

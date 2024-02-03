@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { keycloak } from "../keycloakConfig";
 import { authSlice } from "../features/auth/authSlice";
 import { Provider } from "react-redux";
-import { KeycloackProvider } from "./KeycloackProvider";
+import { KeycloakProvider } from "./KeycloakProvider";
 import { render, waitFor } from "@testing-library/react";
 
 jest.mock("../keycloakConfig");
@@ -29,7 +29,7 @@ describe("KeycloakProvider", () => {
 
         render(
             <Provider store={store}>
-                <KeycloackProvider>Test</KeycloackProvider>
+                <KeycloakProvider>Test</KeycloakProvider>
             </Provider>
         );
 
@@ -53,7 +53,7 @@ describe("KeycloakProvider", () => {
 
         render(
             <Provider store={store}>
-                <KeycloackProvider>Test</KeycloackProvider>
+                <KeycloakProvider>Test</KeycloakProvider>
             </Provider>
         );
 
@@ -77,7 +77,7 @@ describe("KeycloakProvider", () => {
 
         render(
             <Provider store={store}>
-                <KeycloackProvider>Test</KeycloackProvider>
+                <KeycloakProvider>Test</KeycloakProvider>
             </Provider>
         );
 
@@ -102,17 +102,18 @@ describe("KeycloakProvider", () => {
 
         render(
             <Provider store={store}>
-                <KeycloackProvider>Test</KeycloackProvider>
+                <KeycloakProvider>Test</KeycloakProvider>
             </Provider>
         );
 
-        if(!mockKeycloak.onTokenExpired) {
-            throw new Error("onTokenExpired is not set");
+        if (!mockKeycloak.onTokenExpired) {
+            throw new Error("onTokenExpired is not defined");
         }
-
+        
         mockKeycloak.onTokenExpired();
 
         await waitFor(() => expect(mockUpdateToken).toHaveBeenCalledTimes(1));
+
         expect(mockUpdateToken).toHaveBeenCalledWith(70);
 
         expect(store.getState().auth.token).toBe(mockKeycloak.token);

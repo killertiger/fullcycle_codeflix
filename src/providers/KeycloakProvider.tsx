@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { keycloak } from '../keycloakConfig';
-import { setAuthenticated, setToken, setUserDetails } from '../features/auth/authSlice';
+import { setAuthenticated, setToken, setUserDetails, setLoginLoading } from '../features/auth/authSlice';
 
 
-export const KeycloackProvider = ({ children }: {
+export const KeycloakProvider = ({ children }: {
     children: React.ReactNode
 }) => {
     const dispatch = useDispatch();
@@ -19,13 +19,13 @@ export const KeycloackProvider = ({ children }: {
                     }
                 });
             }
-        }
-
-        keycloak.onTokenExpired = async () => {
-            updateToken();
         };
 
-        const initKeycloack = async () => {
+        keycloak.onTokenExpired = () => {
+            updateToken(true);
+        };
+
+        const initKeycloak = async () => {
             try {
                 const isAuthenticated = await keycloak.init({
                     onLoad: "login-required",
@@ -40,17 +40,14 @@ export const KeycloackProvider = ({ children }: {
                 } else {
                     dispatch(setAuthenticated(false));
                 }
+                dispatch(setLoginLoading(false));
             } catch (e) {
-                console.log("Keycloack initialization error", e);
+                console.log("Keycloak initialization error", e);
                 dispatch(setAuthenticated(false));
             }
         }
 
-        keycloak.onTokenExpired = () => {
-            return null;
-        };
-
-        initKeycloack();
+        initKeycloak();
     }, [dispatch]);
 
     return <>{children}</>;
