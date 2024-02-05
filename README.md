@@ -11,7 +11,7 @@ cd micro-frontend-old-backend-1
 docker compose up -d backend
 ```
 
-### Initialize Keycloack
+### Initialize Keycloak
 https://www.keycloak.org/getting-started/getting-started-docker
 ```
 docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:23.0.5 start-dev

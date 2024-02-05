@@ -15,7 +15,7 @@ describe("KeycloakProvider", () => {
         mockKeycloak.loadUserInfo.mockReset();
     });
 
-    it("initialize keycloack and set user details on successful authentication", async () => {
+    it("initialize keycloak and set user details on successful authentication", async () => {
         mockKeycloak.init.mockResolvedValue(true);
         mockKeycloak.loadUserInfo.mockResolvedValue({
             sub: "123",
@@ -44,7 +44,7 @@ describe("KeycloakProvider", () => {
         });
     });
 
-    it("initialize keycloack and sets isAuthenticated to false on failed authentication", async () => {
+    it("initialize keycloak and sets isAuthenticated to false on failed authentication", async () => {
         mockKeycloak.init.mockResolvedValue(false);
 
         const store = configureStore({
@@ -65,7 +65,7 @@ describe("KeycloakProvider", () => {
         expect(store.getState().auth.userDetails).toBeNull();
     });
 
-    it("initialize keycloack and sets isAuthenticated to false on error", async () => {
+    it("initialize keycloak and sets isAuthenticated to false on error", async () => {
         const originalConsoleError = console.error;
         console.error = jest.fn();
 
